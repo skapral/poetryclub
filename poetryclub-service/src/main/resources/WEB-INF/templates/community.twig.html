@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <h1>Agenda for {{ user }} in {{ community }}</h1>
+    {% if empty(contributions) %}
+    <div class="alert alert-danger" role="alert">
+        You haven't made any contributions this month.
+
+        <form action="newcontribution" method="post">
+            <label>New contribution:</label>
+            <input type="text" name="url"/>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+    {% else %}
+    <div class="alert alert-info" role="alert">
+        Contributions made by you this month:
+        <ul>
+        {% for contribution in contributions %}
+            <li><a href="{{contribution.url}}">{{contribution.url}}</a></li>
+        {% endfor %}
+        </ul>
+        <form action="newcontribution" method="post">
+            <label>Want to submit more?</label>
+            <input type="text" name="url"/>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+    {% endif %}
+    {% for feedback in feedbacks %}
+    {% if feedback.count == 0 %}
+    <div class="alert alert-warning" role="alert">
+        Contribution from {{ feedback.login }} awaits for your feedback: <a href="{{ feedback.url }}">{{ feedback.url }}</a>
+        <form action="{{ feedback.uuid }}/newfeedback" method="post">
+            <input type="text" name="url"/>
+            <input type="submit" value="Submit feedback"/>
+        </form>
+    </div>
+    {% endif %}
+    {% endfor %}
+
+    {% if user == admin %}
+        {% for contribution in unapprovedContributions %}
+            <div class="alert alert-primary" role="alert">
+                User {{ contribution.login }} made new contribution: <a href="{{ contribution.url }}">{{ contribution.url }}</a>
+                <form action="{{ contribution.uuid }}/approveContribution" method="post">
+                    <input type="submit" value="Approve">
+                </form>
+            </div>
+        {% endfor %}
+        {% for feedback in unapprovedFeedbacks %}
+            <div class="alert alert-primary" role="alert">
+                User {{ feedback.login }} left new feedback on <a href="{{feedback.contribution_url}}">{{feedback.contribution_url}}</a>:
+                <a href="{{feedback.feedback_url}}">{{feedback.feedback_url}}</a>
+                <form action="{{ feedback.contribution_uuid }}/{{ feedback.feedback_uuid }}/approveFeedback"
+                      method="post">
+                    <input type="submit" value="Approve">
+                </form>
+            </div>
+        {% endfor %}
+    {% else %}
+        {% for contribution in unapprovedContributions %}
+            {% if contribution.login == user %}
+                <div class="alert alert-primary" role="alert">
+                    Your contribution <a href="{{ contribution.url }}">{{contribution.url}}</a> was not yet approved
+                    by {{ admin }}.
+                </div>
+            {% endif %}
+        {% endfor %}
+        {% for feedback in unapprovedFeedbacks %}
+            {% if feedback.login == user %}
+                <div class="alert alert-primary" role="alert">
+                    Your feedback <a href="{{feedback.feedback_url}}">{{feedback.feedback_url}}</a> was not yet
+                    approved by {{ admin }}.
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</div>
+</body>
+</html>

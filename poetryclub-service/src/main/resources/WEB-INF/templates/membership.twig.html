@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <h1>Membership of {{ user }}</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <td>Community</td>
+                    <td>Role</td>
+                </tr>
+            </thead>
+            <tbody>
+            {% for item in membership %}
+                <tr>
+                    <td>
+                        <a href="{{ item.uuid }}/index.html">{{ item.name }}</a>
+                    </td>
+                    <td>
+                        {{ item.role }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

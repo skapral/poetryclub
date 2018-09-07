@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    </head>
+    <body>
+    <div class="container">
+        <h1>Choose community to join</h1>
+        <form method="post" action="joincommunity">
+            {% for community in communities %}
+            {% if (community.role == "undefined") %}
+            <p><input name="uuid" communityname="{{ community.name }}" type="radio" value="{{ community.uuid }}">{{ community.name }}</p>
+            {% endif %}
+            {% endfor %}
+            <input type="submit" value="Proceed">
+        </form>
+    </div>
+    </body>
+</html>

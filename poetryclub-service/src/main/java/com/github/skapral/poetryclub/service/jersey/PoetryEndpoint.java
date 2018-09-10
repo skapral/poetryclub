@@ -1,15 +1,12 @@
 package com.github.skapral.poetryclub.service.jersey;
 
-import com.github.skapral.poetryclub.core.scalar.ScalarHash;
 import com.github.skapral.poetryclub.core.scalar.ScalarURL;
 import com.github.skapral.poetryclub.core.scalar.ScalarUUID;
 import com.github.skapral.poetryclub.db.operation.*;
-import com.github.skapral.poetryclub.db.scalar.*;
 import com.github.skapral.poetryclub.service.scalar.ScalarCurrentUser;
+import com.github.skapral.poetryclub.service.template.TmplCommunity;
 import com.github.skapral.poetryclub.service.template.TmplIndex;
-import com.github.skapral.poetryclub.service.template.TmplJtwig2;
 import com.pragmaticobjects.oo.atom.anno.NotAtom;
-import io.vavr.Tuple2;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
@@ -49,49 +46,9 @@ public class PoetryEndpoint {
     @GET
     @Path("{communityId}/index.html")
     public String communityView(@Context HttpServletRequest req, @PathParam("communityId") String communityId) {
-        return new TmplJtwig2(
-            "WEB-INF/templates/community.twig.html",
-            new ScalarHash(
-                new Tuple2<>(
-                    "community", new ScalarCommunityName(
-                        new ScalarUUID(communityId)
-                    )
-                ),
-                new Tuple2(
-                    "user", new ScalarCurrentUser(req)
-                ),
-                new Tuple2(
-                    "admin", new ScalarCommunityAdmin(
-                        new ScalarUUID(communityId)
-                    )
-                ),
-                new Tuple2(
-                    "contributions",
-                    new ScalarUserContributionsThisMonth(
-                        new ScalarCurrentUser(req),
-                        new ScalarUUID(communityId)
-                    )
-                ),
-                new Tuple2(
-                    "feedbacks",
-                    new ScalarContributionsFeedbackCountByUserThisMonth(
-                        new ScalarCurrentUser(req),
-                        new ScalarUUID(communityId)
-                    )
-                ),
-                new Tuple2(
-                    "unapprovedContributions",
-                    new ScalarUnapprovedContributionsThisMonth(
-                        new ScalarUUID(communityId)
-                    )
-                ),
-                new Tuple2(
-                    "unapprovedFeedbacks",
-                    new ScalarUnapprovedFeedbacksThisMonth(
-                        new ScalarUUID(communityId)
-                    )
-                )
-            )
+        return new TmplCommunity(
+            new ScalarCurrentUser(req),
+            new ScalarUUID(communityId)
         ).content();
     }
 
@@ -125,7 +82,7 @@ public class PoetryEndpoint {
         new OpNewCommunityMember(
             new ScalarCurrentUser(req),
             new ScalarUUID(uuid),
-            "member"
+            "candidate"
         ).execute();
         return Response.seeOther(URI.create("index.html")).build();
     }

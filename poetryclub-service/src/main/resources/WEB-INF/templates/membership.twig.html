@@ -19,7 +19,11 @@
             {% for item in membership %}
                 <tr>
                     <td>
-                        <a href="{{ item.uuid }}/index.html">{{ item.name }}</a>
+                        {% if item.role != "member" or  item.role != "admin" %}
+                            <a href="{{ item.uuid }}/index.html">{{ item.name }}</a>
+                        {% else %}
+                            <p>{{ item.name }}</p>
+                        {% endif %}
                     </td>
                     <td>
                         {{ item.role }}

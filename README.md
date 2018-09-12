@@ -4,11 +4,12 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/ny3rmbdxubkbqmm2/branch/master?svg=true)](https://ci.appveyor.com/project/skapral/poetryclub/branch/master)
 [![Codecov](https://codecov.io/gh/skapral/poetryclub/branch/master/graph/badge.svg)](https://codecov.io/gh/skapral/poetryclub)
 
-Poetry Club is a web service for community of creative people, where each member can expect a support from the others.
+Poetry Club is a web service for community of creative people, united by common idea, where each member can expect a 
+support from the others.
 
 ## How it works
 
-Each community, hosted by Poetry Club, has one administrator and arbitrary number of members. Each member (including 
+Community, hosted by Poetry Club, has one administrator and arbitrary number of members. Each member (including 
 the admin) has following responsibilities to the community:
 
 1. Once a month they must publish some contribution.
@@ -17,7 +18,7 @@ the admin) has following responsibilities to the community:
 constructive discussion, raised in social networks, or a share/repost.
 
 A system aggregates the members activity and provides agenda for administrator, showing them the users who violate
-the rules and don't support the community. Upon administrator's decision, they can be banned.
+the rules and don't support the community. Upon administrator's decision, they may be banned.
 
 ## How to build
 

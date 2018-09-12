@@ -64,6 +64,15 @@
                 </form>
             </div>
         {% endfor %}
+        {% for member in unapprovedMembers %}
+            <div class="alert alert-primary" role="alert">
+                User {{ member.login }} requests to join community
+                <form method="post" data-unapprovedmember="{{member.login}}">
+                    <input type="submit" formaction="{{ member.login }}/approveMembership" value="Approve">
+                    <input type="submit" formaction="{{ member.login }}/banMember" value="Ban">
+                </form>
+            </div>
+        {% endfor %}
     {% else %}
         {% for contribution in unapprovedContributions %}
             {% if contribution.login == user %}

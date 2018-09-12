@@ -26,28 +26,33 @@
 
 package com.github.skapral.poetryclub.itests.assertions.webdriver;
 
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
- * Opens community
+ * Asserts that the currently opened page says that the member is banned
  *
  * @author Kapralov Sergey
  */
-public class OpenCommunity implements WebdriverAction {
+public class AssertMemberIsBanned implements WebdriverAction {
+    private final String userName;
     private final String communityName;
 
     /**
      * Ctor.
+     * @param userName User's name
      * @param communityName Community name
      */
-    public OpenCommunity(String communityName) {
+    public AssertMemberIsBanned(String userName, String communityName) {
+        this.userName = userName;
         this.communityName = communityName;
     }
 
     @Override
     public final void execute(WebDriver driver) {
-        driver.findElement(By.linkText(communityName)).click();
+        assertThat(driver.findElement(By.tagName("h1")).getText())
+            .isEqualTo("Membership of " + userName + " in " + communityName + " is suspended.");
     }
 }

@@ -50,7 +50,7 @@ public class ScalarPoetryClubJerseyResourceConfig implements Scalar<ResourceConf
 
     @Override
     public final ResourceConfig value() {
-        if(testEnv.optionalValue().get().equals("true")) {
+        if(testEnv.optionalValue().isDefined()) {
             return new PoetryClubFakedAuthenticationAPI();
         } else {
             return new PoetryClubAPI();

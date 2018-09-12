@@ -83,6 +83,53 @@ public class IntegrationTest extends TestsSuite {
                         new AssertMembershipPage("user")
                     )
                 )
+            ),
+            new TestCase(
+                "User joins, but its membership was not yet approved",
+                new AssertAssumingPoetryclubInstance(
+                    new AssertWebdriverScenario(
+                        new AuthenticateAsUser("owner"),
+                        new CreateCommunity("Test community"),
+                        new AuthenticateAsUser("user"),
+                        new JoinCommunity("Test community"),
+                        new OpenCommunityAgenda("Test community"),
+                        new AssertMembershipNotApprovedPage("user", "Test community")
+                    )
+                )
+            ),
+            new TestCase(
+                "Owner approves the user's membership",
+                new AssertAssumingPoetryclubInstance(
+                    new AssertWebdriverScenario(
+                        new AuthenticateAsUser("owner"),
+                        new CreateCommunity("Test community"),
+                        new AuthenticateAsUser("user"),
+                        new JoinCommunity("Test community"),
+                        new AuthenticateAsUser("owner"),
+                        new OpenCommunityAgenda("Test community"),
+                        new ApproveMembershipOnAgenda("user"),
+                        new AuthenticateAsUser("user"),
+                        new OpenCommunityAgenda("Test community"),
+                        new AssertAgendaPage("user", "Test community")
+                    )
+                )
+            ),
+            new TestCase(
+                "Owner declines the user's membership",
+                new AssertAssumingPoetryclubInstance(
+                    new AssertWebdriverScenario(
+                        new AuthenticateAsUser("owner"),
+                        new CreateCommunity("Test community"),
+                        new AuthenticateAsUser("user"),
+                        new JoinCommunity("Test community"),
+                        new AuthenticateAsUser("owner"),
+                        new OpenCommunityAgenda("Test community"),
+                        new DeclineMembershipOnAgenda("user"),
+                        new AuthenticateAsUser("user"),
+                        new OpenCommunityAgenda("Test community"),
+                        new AssertMemberIsBanned("user", "Test community")
+                    )
+                )
             )
         );
     }

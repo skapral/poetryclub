@@ -52,37 +52,43 @@ public class TmplAgenda extends TmplJtwig2 {
                     communityId
                 )
                 ),
-                new Tuple2(
+                new Tuple2<>(
                     "user", userName
                 ),
-                new Tuple2(
+                new Tuple2<>(
                     "admin", new ScalarCommunityAdmin(
                         communityId
                     )
                 ),
-                new Tuple2(
+                new Tuple2<>(
                     "contributions",
                     new ScalarUserContributionsThisMonth(
                         userName,
                         communityId
                     )
                 ),
-                new Tuple2(
+                new Tuple2<>(
                     "feedbacks",
                     new ScalarContributionsFeedbackCountByUserThisMonth(
                         userName,
                         communityId
                     )
                 ),
-                new Tuple2(
+                new Tuple2<>(
                     "unapprovedContributions",
                     new ScalarUnapprovedContributionsThisMonth(
                         communityId
                     )
                 ),
-                new Tuple2(
+                new Tuple2<>(
                     "unapprovedFeedbacks",
                     new ScalarUnapprovedFeedbacksThisMonth(
+                        communityId
+                    )
+                ),
+                new Tuple2<>(
+                    "unapprovedMembers",
+                    new ScalarUnapprovedMembers(
                         communityId
                     )
                 )

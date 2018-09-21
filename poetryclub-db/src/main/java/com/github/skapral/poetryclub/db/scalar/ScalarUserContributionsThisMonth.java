@@ -1,6 +1,8 @@
 package com.github.skapral.poetryclub.db.scalar;
 
 import com.github.skapral.poetryclub.core.scalar.Scalar;
+import com.github.skapral.poetryclub.core.time.SystemTime;
+import com.github.skapral.poetryclub.core.time.SystimeAbstractedOutByProperty;
 import com.github.skapral.poetryclub.db.access.DbaPoetryClub;
 
 import java.time.LocalDate;
@@ -21,7 +23,7 @@ public class ScalarUserContributionsThisMonth extends ScalarFromJooqRecords {
      * @param userName User login
      * @param community Community identity
      */
-    public ScalarUserContributionsThisMonth(Scalar<String> userName, Scalar<UUID> community) {
+    public ScalarUserContributionsThisMonth(Scalar<String> userName, Scalar<UUID> community, SystemTime time) {
         super(
             new DbaPoetryClub(),
             () -> select(
@@ -29,8 +31,8 @@ public class ScalarUserContributionsThisMonth extends ScalarFromJooqRecords {
             ).from(
                 CONTRIBUTION
             ).where(
-                year(CONTRIBUTION.TIMESTAMP).eq(Year.now().getValue()),
-                month(CONTRIBUTION.TIMESTAMP).eq(LocalDate.now().getMonthValue()),
+                year(CONTRIBUTION.TIMESTAMP).eq(Year.from(time.time()).getValue()),
+                month(CONTRIBUTION.TIMESTAMP).eq(LocalDate.from(time.time()).getMonthValue()),
                 CONTRIBUTION.COMMUNITYID.eq(
                     select(COMMUNITY.ID).from(COMMUNITY).where(COMMUNITY.UUID.eq(community.value()))
                 ),
@@ -39,5 +41,9 @@ public class ScalarUserContributionsThisMonth extends ScalarFromJooqRecords {
                 )
             )
         );
+    }
+
+    public ScalarUserContributionsThisMonth(Scalar<String> userName, Scalar<UUID> community) {
+        this(userName, community, new SystimeAbstractedOutByProperty());
     }
 }

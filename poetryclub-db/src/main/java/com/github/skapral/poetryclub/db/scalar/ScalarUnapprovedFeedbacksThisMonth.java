@@ -1,14 +1,18 @@
 package com.github.skapral.poetryclub.db.scalar;
 
 import com.github.skapral.poetryclub.core.scalar.Scalar;
+import com.github.skapral.poetryclub.core.time.SystemTime;
+import com.github.skapral.poetryclub.core.time.SystimeAbstractedOutByProperty;
 import com.github.skapral.poetryclub.db.access.DbaPoetryClub;
 
 import java.time.LocalDate;
+import java.time.Year;
 import java.util.UUID;
 
 import static org.jooq.generated.Tables.*;
 import static org.jooq.impl.DSL.month;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.year;
 
 /**
  * List of unapproved feedbacks, made in certain community this month
@@ -20,7 +24,7 @@ public class ScalarUnapprovedFeedbacksThisMonth extends ScalarFromJooqRecords {
      * Ctor.
      * @param communityId Community identity
      */
-    public ScalarUnapprovedFeedbacksThisMonth(Scalar<UUID> communityId) {
+    public ScalarUnapprovedFeedbacksThisMonth(Scalar<UUID> communityId, SystemTime time) {
         super(
             new DbaPoetryClub(),
             () -> select(
@@ -35,7 +39,8 @@ public class ScalarUnapprovedFeedbacksThisMonth extends ScalarFromJooqRecords {
                     .join(ACCOUNT).on(ACCOUNT.ID.eq(FEEDBACK.ACCOUNTID))
             )
             .where(
-                month(FEEDBACK.TIMESTAMP).eq(LocalDate.now().getMonthValue()),
+                    year(CONTRIBUTION.TIMESTAMP).eq(Year.from(time.time()).getValue()),
+                    month(CONTRIBUTION.TIMESTAMP).eq(LocalDate.from(time.time()).getMonthValue()),
                 FEEDBACK.STATUS.eq("unapproved"),
                 CONTRIBUTION.COMMUNITYID.eq(
                     select(COMMUNITY.ID).from(COMMUNITY).where(COMMUNITY.UUID.eq(communityId.value()))
@@ -43,5 +48,9 @@ public class ScalarUnapprovedFeedbacksThisMonth extends ScalarFromJooqRecords {
             )
 
         );
+    }
+
+    public ScalarUnapprovedFeedbacksThisMonth(Scalar<UUID> communityId) {
+        this(communityId, new SystimeAbstractedOutByProperty());
     }
 }

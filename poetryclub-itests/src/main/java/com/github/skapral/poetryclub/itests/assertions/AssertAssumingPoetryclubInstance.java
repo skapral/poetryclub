@@ -37,7 +37,7 @@ import org.testcontainers.containers.GenericContainer;
 import java.util.function.Supplier;
 
 /**
- * Check assertion on running poetryclub instance
+ * Check assertion while there is test poetryclub instance online
  *
  * @author Kapralov Sergey
  */
@@ -72,6 +72,7 @@ public class AssertAssumingPoetryclubInstance implements Assertion {
                 + "/postgres?user=postgres&password=postgres";
             System.setProperty("poetryclub.JDBC_DATABASE_URL", jdbcUrl);
             System.setProperty("poetryclub.OWNER", "owner");
+            System.setProperty("poetryclub.FAKE_SYSTIME", "true");
             Server.ServerStopHandle stopHandle = poetryServer.get().start();
             try {
                 assertion.check();

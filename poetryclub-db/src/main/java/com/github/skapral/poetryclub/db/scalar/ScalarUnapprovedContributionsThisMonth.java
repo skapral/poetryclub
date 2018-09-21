@@ -1,6 +1,8 @@
 package com.github.skapral.poetryclub.db.scalar;
 
 import com.github.skapral.poetryclub.core.scalar.Scalar;
+import com.github.skapral.poetryclub.core.time.SystemTime;
+import com.github.skapral.poetryclub.core.time.SystimeAbstractedOutByProperty;
 import com.github.skapral.poetryclub.db.access.DbaPoetryClub;
 
 import java.time.LocalDate;
@@ -20,7 +22,7 @@ public class ScalarUnapprovedContributionsThisMonth extends ScalarFromJooqRecord
      * Ctor.
      * @param communityId Community identity
      */
-    public ScalarUnapprovedContributionsThisMonth(Scalar<UUID> communityId) {
+    public ScalarUnapprovedContributionsThisMonth(Scalar<UUID> communityId, SystemTime time) {
         super(
             new DbaPoetryClub(),
             () -> select(
@@ -30,13 +32,17 @@ public class ScalarUnapprovedContributionsThisMonth extends ScalarFromJooqRecord
             ).from(
                 CONTRIBUTION.join(ACCOUNT).on(ACCOUNT.ID.eq(CONTRIBUTION.ACCOUNTID))
             ).where(
-                year(CONTRIBUTION.TIMESTAMP).eq(Year.now().getValue()),
-                month(CONTRIBUTION.TIMESTAMP).eq(LocalDate.now().getMonthValue()),
+                year(CONTRIBUTION.TIMESTAMP).eq(Year.from(time.time()).getValue()),
+                month(CONTRIBUTION.TIMESTAMP).eq(LocalDate.from(time.time()).getMonthValue()),
                 CONTRIBUTION.STATUS.eq("unapproved"),
                 CONTRIBUTION.COMMUNITYID.eq(
                     select(COMMUNITY.ID).from(COMMUNITY).where(COMMUNITY.UUID.eq(communityId.value()))
                 )
             )
         );
+    }
+
+    public ScalarUnapprovedContributionsThisMonth(Scalar<UUID> communityId) {
+        this(communityId, new SystimeAbstractedOutByProperty());
     }
 }

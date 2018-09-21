@@ -8,6 +8,7 @@ import com.github.skapral.poetryclub.service.operation.OpAuthorizedForAdmin;
 import com.github.skapral.poetryclub.service.scalar.ScalarCurrentUser;
 import com.github.skapral.poetryclub.service.template.TmplCommunity;
 import com.github.skapral.poetryclub.service.template.TmplIndex;
+import com.github.skapral.poetryclub.service.template.TmplSummary;
 import com.pragmaticobjects.oo.atom.anno.NotAtom;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,6 +37,14 @@ public class PoetryEndpoint {
     public String index(@Context HttpServletRequest req) {
         return new TmplIndex(
             new ScalarCurrentUser(req)
+        ).content();
+    }
+
+    @GET
+    @Path("{communityId}/summary.html")
+    public String index(@Context HttpServletRequest req, @PathParam("communityId") String communityId) {
+        return new TmplSummary(
+            new ScalarUUID(communityId)
         ).content();
     }
 

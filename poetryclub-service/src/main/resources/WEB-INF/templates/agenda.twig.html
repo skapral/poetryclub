@@ -8,6 +8,8 @@
 <body>
 <div class="container">
     <h1>Agenda for {{ user }} in {{ community }}</h1>
+    <a href="summary.html">Overall summary</a>
+
     {% if empty(contributions) %}
     <div class="alert alert-danger" role="alert">
         You haven't made any contributions this month.

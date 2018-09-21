@@ -31,6 +31,7 @@ import com.github.skapral.poetryclub.core.scalar.ScalarURL;
 import com.github.skapral.poetryclub.core.scalar.ScalarUUID;
 import com.github.skapral.poetryclub.db.operation.*;
 import com.github.skapral.poetryclub.service.operation.OpAuthorizedForAdmin;
+import com.github.skapral.poetryclub.service.operation.OpAuthorizedForMembers;
 import com.github.skapral.poetryclub.service.scalar.ScalarCurrentUser;
 import com.github.skapral.poetryclub.service.template.TmplCommunity;
 import com.github.skapral.poetryclub.service.template.TmplIndex;
@@ -144,10 +145,14 @@ public class PoetryEndpoint {
     public Response newContribution(@PathParam("communityId") String communityId,
                                     @FormParam("url") String url,
                                     @Context HttpServletRequest req) throws Exception {
-        new OpNewContribution(
+        new OpAuthorizedForMembers(
+            req,
             new ScalarUUID(communityId),
-            new ScalarCurrentUser(req),
-            new ScalarURL(url)
+            new OpNewContribution(
+                new ScalarUUID(communityId),
+                new ScalarCurrentUser(req),
+                new ScalarURL(url)
+            )
         ).execute();
         return Response.seeOther(URI.create(URLEncoder.encode(communityId, "UTF-8") + "/index.html")).build();
     }
@@ -164,15 +169,18 @@ public class PoetryEndpoint {
     @POST
     @Path("{communityId}/{contrbutionId}/newfeedback")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public Response newFeedback(
-        @PathParam("communityId") String communityId,
-        @PathParam("contrbutionId") String contributionId,
-        @FormParam("url") String url,
-        @Context HttpServletRequest req) throws Exception {
-        new OpNewFeedback(
-            new ScalarCurrentUser(req),
-            new ScalarUUID(contributionId),
-            new ScalarURL(url)
+    public Response newFeedback(@PathParam("communityId") String communityId,
+                                @PathParam("contrbutionId") String contributionId,
+                                @FormParam("url") String url,
+                                @Context HttpServletRequest req) throws Exception {
+        new OpAuthorizedForMembers(
+            req,
+            new ScalarUUID(communityId),
+            new OpNewFeedback(
+                new ScalarCurrentUser(req),
+                new ScalarUUID(contributionId),
+                new ScalarURL(url)
+            )
         ).execute();
         return Response.seeOther(URI.create(URLEncoder.encode(communityId, "UTF-8") + "/index.html")).build();
     }
@@ -188,12 +196,15 @@ public class PoetryEndpoint {
     @POST
     @Path("{communityId}/{contrbutionId}/approveContribution")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public Response approveContribution(
-        @PathParam("communityId") String communityId,
-        @PathParam("contrbutionId") String contributionId,
-        @Context HttpServletRequest req) throws Exception {
-        new OpApproveContribution(
-            new ScalarUUID(contributionId)
+    public Response approveContribution(@PathParam("communityId") String communityId,
+                                        @PathParam("contrbutionId") String contributionId,
+                                        @Context HttpServletRequest req) throws Exception {
+        new OpAuthorizedForAdmin(
+            req,
+            new ScalarUUID(communityId),
+            new OpApproveContribution(
+                new ScalarUUID(contributionId)
+            )
         ).execute();
         return Response.seeOther(URI.create(URLEncoder.encode(communityId, "UTF-8") + "/index.html")).build();
     }
@@ -211,13 +222,16 @@ public class PoetryEndpoint {
     @POST
     @Path("{communityId}/{contrbutionId}/{feedbackId}/approveFeedback")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public Response approveFeedback(
-        @PathParam("communityId") String communityId,
-        @PathParam("contrbutionId") String contributionId,
-        @PathParam("feedbackId") String feedbackId,
-        @Context HttpServletRequest req) throws Exception {
-        new OpApproveFeedback(
-            new ScalarUUID(feedbackId)
+    public Response approveFeedback(@PathParam("communityId") String communityId,
+                                    @PathParam("contrbutionId") String contributionId,
+                                    @PathParam("feedbackId") String feedbackId,
+                                    @Context HttpServletRequest req) throws Exception {
+        new OpAuthorizedForAdmin(
+            req,
+            new ScalarUUID(communityId),
+            new OpApproveFeedback(
+                new ScalarUUID(feedbackId)
+            )
         ).execute();
         return Response.seeOther(URI.create(URLEncoder.encode(communityId, "UTF-8") + "/index.html")).build();
     }
@@ -233,10 +247,9 @@ public class PoetryEndpoint {
     @POST
     @Path("{communityId}/{user}/approveMembership")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public Response approveMembership(
-        @PathParam("communityId") String communityId,
-        @PathParam("user") String userLogin,
-        @Context HttpServletRequest req) throws Exception {
+    public Response approveMembership(@PathParam("communityId") String communityId,
+                                      @PathParam("user") String userLogin,
+                                      @Context HttpServletRequest req) throws Exception {
         new OpAuthorizedForAdmin(
             req,
             new ScalarUUID(communityId),
@@ -259,10 +272,9 @@ public class PoetryEndpoint {
     @POST
     @Path("{communityId}/{user}/banMember")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public Response banMember(
-        @PathParam("communityId") String communityId,
-        @PathParam("user") String userLogin,
-        @Context HttpServletRequest req) throws Exception {
+    public Response banMember(@PathParam("communityId") String communityId,
+                              @PathParam("user") String userLogin,
+                              @Context HttpServletRequest req) throws Exception {
         new OpAuthorizedForAdmin(
             req,
             new ScalarUUID(communityId),

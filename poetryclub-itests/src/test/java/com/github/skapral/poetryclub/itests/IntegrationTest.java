@@ -130,6 +130,59 @@ public class IntegrationTest extends TestsSuite {
                         new AssertMemberIsBanned("user", "Test community")
                     )
                 )
+            ),
+            new TestCase(
+                "Agenda page has a link on community summary",
+                new AssertAssumingPoetryclubInstance(
+                    new AssertWebdriverScenario(
+                        new AuthenticateAsUser("owner"),
+                        new CreateCommunity("Test community"),
+                        new OpenCommunityAgenda("Test community"),
+                        new OpenCommunitySummary(),
+                        new AssertSummaryPage("Test community")
+                    )
+                )
+            ),
+            new TestCase(
+                "Summary page of community displays all members",
+                new AssertAssumingPoetryclubInstance(
+                    new AssertWebdriverScenario(
+                        new AuthenticateAsUser("owner"),
+                        new CreateCommunity("Test community"),
+                        new AuthenticateAsUser("user1"),
+                        new JoinCommunity("Test community"),
+                        new AuthenticateAsUser("user2"),
+                        new JoinCommunity("Test community"),
+                        new AuthenticateAsUser("owner"),
+                        new OpenCommunityAgenda("Test community"),
+                        new ApproveMembershipOnAgenda("user1"),
+                        new OpenCommunitySummary(),
+                        new AssertSummaryPageDisplaysMember("owner", "admin"),
+                        new AssertSummaryPageDisplaysMember("user1", "member"),
+                        new AssertSummaryPageDisplaysMember("user2", "candidate")
+                    )
+                )
+            ),
+            new TestCase(
+                "Summary page of community displays all contributions",
+                new AssertAssumingPoetryclubInstance(
+                    new AssertWebdriverScenario(
+                        new AuthenticateAsUser("owner"),
+                        new CreateCommunity("Test community"),
+                        new AuthenticateAsUser("user1"),
+                        new JoinCommunity("Test community"),
+                        new AuthenticateAsUser("owner"),
+                        new OpenCommunityAgenda("Test community"),
+                        new ApproveMembershipOnAgenda("user1"),
+                        new SubmitContributionOnAgenda("http://test/contrib1"),
+                        new AuthenticateAsUser("user1"),
+                        new OpenCommunityAgenda("Test community"),
+                        new SubmitContributionOnAgenda("http://test/contrib2"),
+                        new OpenCommunitySummary(),
+                        new AssertSummaryPageDisplaysContribution("http://test/contrib1", "owner"),
+                        new AssertSummaryPageDisplaysContribution("http://test/contrib2", "user1")
+                    )
+                )
             )
         );
     }

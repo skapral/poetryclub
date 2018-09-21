@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <h1>Summary for {{ community }}</h1>
+
+    <h2>Membership</h2>
+
+    <table id="membership" class="table">
+        <thead>
+        <tr>
+            <td>User</td>
+            <td>Role</td>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in membership %}
+        <tr>
+            <td>
+                {{ item.login }}
+            </td>
+            <td>
+                {{ item.role }}
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Contributions</h2>
+
+    <table id="contributions" class="table">
+        <thead>
+        <tr>
+            <td>Date</td>
+            <td>Contribution</td>
+            <td>Author</td>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in contributions %}
+        <tr>
+            <td>
+                {{ item.timestamp }}
+            </td>
+            <td>
+                <a href="{{ item.url }}">{{ item.url }}</a>
+            </td>
+            <td>
+                {{ item.login }}
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

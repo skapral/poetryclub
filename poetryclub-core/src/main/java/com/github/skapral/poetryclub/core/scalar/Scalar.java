@@ -36,4 +36,8 @@ public interface Scalar<T> {
      * @return Scalar's value
      */
     T value();
+
+    interface Inference<T> {
+        Scalar<T> scalar();
+    }
 }

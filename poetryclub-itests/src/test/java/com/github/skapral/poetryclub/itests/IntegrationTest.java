@@ -32,6 +32,8 @@ import com.pragmaticobjects.oo.atom.anno.NotAtom;
 import com.pragmaticobjects.oo.tests.TestCase;
 import com.pragmaticobjects.oo.tests.junit5.TestsSuite;
 
+import java.time.LocalDateTime;
+
 /**
  * Integration tests suite for poetryclub.
  *
@@ -128,6 +130,52 @@ public class IntegrationTest extends TestsSuite {
                         new AuthenticateAsUser("user"),
                         new OpenCommunityAgenda("Test community"),
                         new AssertMemberIsBanned("user", "Test community")
+                    )
+                )
+            ),
+            new TestCase(
+                "Agenda shows candidates to ban for admin",
+                new AssertAssumingPoetryclubInstance(
+                    new AssertWebdriverScenario(
+                        new FakeTime(LocalDateTime.of(2017, 8, 1, 12, 00)),
+                        new AuthenticateAsUser("owner"),
+                        new CreateCommunity("Test community"),
+                        new AuthenticateAsUser("user"),
+                        new JoinCommunity("Test community"),
+                        new AuthenticateAsUser("owner"),
+                        new OpenCommunityAgenda("Test community"),
+                        new ApproveMembershipOnAgenda("user"),
+                        new SubmitContributionOnAgenda("http://contribution1"),
+                        new SubmitContributionOnAgenda("http://contribution2"),
+                        new FakeTime(LocalDateTime.of(2017, 9, 1, 12, 00)),
+                        new AuthenticateAsUser("owner"),
+                        new OpenCommunityAgenda("Test community"),
+                        new AssertAgendaWarnsThatUserHaventMadeAnyContributions("user"),
+                        new AssertAgendaWarnsThatUserHaventMadeFeedbackOnCertainContribution("user", "http://contribution1"),
+                        new AssertAgendaWarnsThatUserHaventMadeFeedbackOnCertainContribution("user", "http://contribution2")
+                    )
+                )
+            ),
+            new TestCase(
+                "Agenda shows rules violations for member",
+                new AssertAssumingPoetryclubInstance(
+                    new AssertWebdriverScenario(
+                        new FakeTime(LocalDateTime.of(2017, 8, 1, 12, 00)),
+                        new AuthenticateAsUser("owner"),
+                        new CreateCommunity("Test community"),
+                        new AuthenticateAsUser("user"),
+                        new JoinCommunity("Test community"),
+                        new AuthenticateAsUser("owner"),
+                        new OpenCommunityAgenda("Test community"),
+                        new ApproveMembershipOnAgenda("user"),
+                        new SubmitContributionOnAgenda("http://contribution1"),
+                        new SubmitContributionOnAgenda("http://contribution2"),
+                        new FakeTime(LocalDateTime.of(2017, 9, 1, 12, 00)),
+                        new AuthenticateAsUser("user"),
+                        new OpenCommunityAgenda("Test community"),
+                        new AssertAgendaWarnsAboutTheAbsenseOfContributions(),
+                        new AssertAgendaWarnsAboutTheAbsenseOfFeedbackOnContribution("http://contribution1"),
+                        new AssertAgendaWarnsAboutTheAbsenseOfFeedbackOnContribution("http://contribution2")
                     )
                 )
             ),

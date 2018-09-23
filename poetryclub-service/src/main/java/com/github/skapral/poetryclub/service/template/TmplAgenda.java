@@ -91,6 +91,18 @@ public class TmplAgenda extends TmplJtwig2 {
                     new ScalarUnapprovedMembers(
                         communityId
                     )
+                ),
+                new Tuple2<>(
+                    "usersWithoutContributions",
+                    new ScalarUsersWhoHaventMadeAnyContributionLastMonth(
+                        communityId
+                    )
+                ),
+                new Tuple2<>(
+                    "usersWithoutFeedbacks",
+                    new ScalarUsersWhoHaventProvidedFeedbackLastMonth(
+                        communityId
+                    )
                 )
             )
         );

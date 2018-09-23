@@ -75,6 +75,27 @@
                 </form>
             </div>
         {% endfor %}
+        {% for item in usersWithoutContributions %}
+            {% if item.login != user %}
+            <div class="alert alert-danger" role="alert">
+                User {{ item.login }} haven't made any contributions last month.
+                <form method="post" action="{{ item.login }}/banMember">
+                    <input type="submit" value="Ban">
+                </form>
+            </div>
+            {% endif %}
+        {% endfor %}
+        {% for item in usersWithoutFeedbacks %}
+            {% if item.login != user %}
+            <div class="alert alert-warning" role="alert">
+                User {{ item.login }} haven't left any feedback to contribution <a href="{{ item.url }}">{{ item.url }}</a>
+                last month.
+                <form method="post" action="{{ item.login }}/banMember">
+                    <input type="submit" value="Ban">
+                </form>
+            </div>
+            {% endif %}
+        {% endfor %}
     {% else %}
         {% for contribution in unapprovedContributions %}
             {% if contribution.login == user %}
@@ -89,6 +110,21 @@
                 <div class="alert alert-primary" role="alert">
                     Your feedback <a href="{{feedback.feedback_url}}">{{feedback.feedback_url}}</a> was not yet
                     approved by {{ admin }}.
+                </div>
+            {% endif %}
+        {% endfor %}
+        {% for item in usersWithoutContributions %}
+            {% if item.login == user %}
+                <div class="alert alert-danger" role="alert">
+                    You haven't made any contributions last month. Administrator ({{ admin }}) is notified.
+                </div>
+            {% endif %}
+        {% endfor %}
+        {% for item in usersWithoutFeedbacks %}
+            {% if item.login == user %}
+                <div class="alert alert-warning" role="alert">
+                    You haven't left any feedback to contribution <a href="{{user.url}}">{{user.url}}</a>
+                    last month. Administrator ({{ admin }}) is notified.
                 </div>
             {% endif %}
         {% endfor %}

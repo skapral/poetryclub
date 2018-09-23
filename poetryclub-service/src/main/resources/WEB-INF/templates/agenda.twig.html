@@ -123,7 +123,7 @@
         {% for item in usersWithoutFeedbacks %}
             {% if item.login == user %}
                 <div class="alert alert-warning" role="alert">
-                    You haven't left any feedback to contribution <a href="{{user.url}}">{{user.url}}</a>
+                    You haven't left any feedback to contribution <a href="{{item.url}}">{{item.url}}</a>
                     last month. Administrator ({{ admin }}) is notified.
                 </div>
             {% endif %}

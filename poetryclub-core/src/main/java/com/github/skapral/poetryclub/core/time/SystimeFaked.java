@@ -43,7 +43,6 @@ public class SystimeFaked implements SystemTime {
 
     /**
      * Internal memory structure for keeping fake time value.
-     * Must NOT be user anywhere except {@link SystimeFaked} and {@link com.github.skapral.poetryclub.itests.assertions.webdriver.FakeTime}
      */
     @NotAtom
     public static class Memory {

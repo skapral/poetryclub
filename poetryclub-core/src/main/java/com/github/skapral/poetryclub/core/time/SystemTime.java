@@ -26,7 +26,7 @@
 
 package com.github.skapral.poetryclub.core.time;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 /**
  * System time
@@ -36,7 +36,7 @@ public interface SystemTime {
     /**
      * @return time
      */
-    LocalDateTime time();
+    ZonedDateTime time();
 
     /**
      * System time inference

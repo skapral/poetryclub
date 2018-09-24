@@ -26,7 +26,7 @@
 
 package com.github.skapral.poetryclub.core.time;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 /**
  * True system clock time
@@ -35,7 +35,7 @@ import java.time.LocalDateTime;
  */
 public class SystimeReal implements SystemTime {
     @Override
-    public final LocalDateTime time() {
-        return LocalDateTime.now();
+    public final ZonedDateTime time() {
+        return ZonedDateTime.now();
     }
 }

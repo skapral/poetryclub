@@ -31,10 +31,7 @@ import com.github.skapral.poetryclub.core.time.SystemTime;
 import com.github.skapral.poetryclub.core.time.SystimeAbstractedOutByProperty;
 import com.github.skapral.poetryclub.db.access.DbaPoetryClub;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.Year;
-import java.time.YearMonth;
+import java.time.*;
 import java.util.UUID;
 
 import static org.jooq.generated.Tables.*;
@@ -56,7 +53,7 @@ public class ScalarUsersWhoHaventProvidedFeedbackLastMonth extends ScalarFromJoo
         super(
             new DbaPoetryClub(),
             () -> {
-                LocalDateTime timeValue = time.time();
+                ZonedDateTime timeValue = time.time();
                 YearMonth from = YearMonth.from(timeValue);
                 LocalDateTime lastMonthDate = from.minusMonths(1).atEndOfMonth().atStartOfDay();
                 return select(ACCOUNT.LOGIN, CONTRIBUTION.URL, count(FEEDBACK.ID))
@@ -68,12 +65,14 @@ public class ScalarUsersWhoHaventProvidedFeedbackLastMonth extends ScalarFromJoo
                         MEMBER.ACCOUNTID.eq(ACCOUNT.ID),
                         MEMBER.ROLE.ne("banned")
                     )
-                    .leftJoin(CONTRIBUTION).on(CONTRIBUTION.ACCOUNTID.ne(ACCOUNT.ID))
-                    .fullJoin(FEEDBACK).on(
-                        CONTRIBUTION.ID.eq(FEEDBACK.CONTRIBUTIONID),
-                        FEEDBACK.ACCOUNTID.eq(ACCOUNT.ID),
+                    .leftJoin(CONTRIBUTION).on(
+                        CONTRIBUTION.ACCOUNTID.ne(ACCOUNT.ID),
                         year(CONTRIBUTION.TIMESTAMP).eq(Year.from(lastMonthDate).getValue()),
                         month(CONTRIBUTION.TIMESTAMP).eq(LocalDate.from(lastMonthDate).getMonthValue())
+                    )
+                    .fullJoin(FEEDBACK).on(
+                        CONTRIBUTION.ID.eq(FEEDBACK.CONTRIBUTIONID),
+                        FEEDBACK.ACCOUNTID.eq(ACCOUNT.ID)
                     )
                     .groupBy(ACCOUNT.LOGIN, CONTRIBUTION.URL)
                     .having(count(FEEDBACK.ID).eq(0));

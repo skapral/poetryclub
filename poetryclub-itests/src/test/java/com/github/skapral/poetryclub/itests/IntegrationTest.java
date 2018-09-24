@@ -33,6 +33,7 @@ import com.pragmaticobjects.oo.tests.TestCase;
 import com.pragmaticobjects.oo.tests.junit5.TestsSuite;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 /**
  * Integration tests suite for poetryclub.
@@ -137,7 +138,7 @@ public class IntegrationTest extends TestsSuite {
                 "Agenda shows candidates to ban for admin",
                 new AssertAssumingPoetryclubInstance(
                     new AssertWebdriverScenario(
-                        new FakeTime(LocalDateTime.of(2017, 8, 1, 12, 00)),
+                        new FakeTime(LocalDateTime.of(2017, 8, 1, 12, 00).atZone(ZoneId.of("UTC"))),
                         new AuthenticateAsUser("owner"),
                         new CreateCommunity("Test community"),
                         new AuthenticateAsUser("user"),
@@ -147,7 +148,7 @@ public class IntegrationTest extends TestsSuite {
                         new ApproveMembershipOnAgenda("user"),
                         new SubmitContributionOnAgenda("http://contribution1"),
                         new SubmitContributionOnAgenda("http://contribution2"),
-                        new FakeTime(LocalDateTime.of(2017, 9, 1, 12, 00)),
+                        new FakeTime(LocalDateTime.of(2017, 9, 1, 12, 00).atZone(ZoneId.of("UTC"))),
                         new AuthenticateAsUser("owner"),
                         new OpenCommunityAgenda("Test community"),
                         new AssertAgendaWarnsThatUserHaventMadeAnyContributions("user"),
@@ -160,7 +161,7 @@ public class IntegrationTest extends TestsSuite {
                 "Agenda shows rules violations for member",
                 new AssertAssumingPoetryclubInstance(
                     new AssertWebdriverScenario(
-                        new FakeTime(LocalDateTime.of(2017, 8, 1, 12, 00)),
+                        new FakeTime(LocalDateTime.of(2017, 8, 1, 12, 00).atZone(ZoneId.of("UTC"))),
                         new AuthenticateAsUser("owner"),
                         new CreateCommunity("Test community"),
                         new AuthenticateAsUser("user"),
@@ -170,7 +171,7 @@ public class IntegrationTest extends TestsSuite {
                         new ApproveMembershipOnAgenda("user"),
                         new SubmitContributionOnAgenda("http://contribution1"),
                         new SubmitContributionOnAgenda("http://contribution2"),
-                        new FakeTime(LocalDateTime.of(2017, 9, 1, 12, 00)),
+                        new FakeTime(LocalDateTime.of(2017, 9, 1, 12, 00).atZone(ZoneId.of("UTC"))),
                         new AuthenticateAsUser("user"),
                         new OpenCommunityAgenda("Test community"),
                         new AssertAgendaWarnsAboutTheAbsenseOfContributions(),

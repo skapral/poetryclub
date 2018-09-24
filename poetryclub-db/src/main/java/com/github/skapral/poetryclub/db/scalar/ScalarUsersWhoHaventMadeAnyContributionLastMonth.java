@@ -5,10 +5,7 @@ import com.github.skapral.poetryclub.core.time.SystemTime;
 import com.github.skapral.poetryclub.core.time.SystimeAbstractedOutByProperty;
 import com.github.skapral.poetryclub.db.access.DbaPoetryClub;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.Year;
-import java.time.YearMonth;
+import java.time.*;
 import java.util.UUID;
 
 import static org.jooq.generated.Tables.COMMUNITY;
@@ -32,7 +29,7 @@ public class ScalarUsersWhoHaventMadeAnyContributionLastMonth extends ScalarFrom
         super(
             new DbaPoetryClub(),
             () -> {
-                LocalDateTime timeValue = time.time();
+                ZonedDateTime timeValue = time.time();
                 YearMonth from = YearMonth.from(timeValue);
                 LocalDateTime lastMonthDate = from.minusMonths(1).atEndOfMonth().atStartOfDay();
                 return select(ACCOUNT.LOGIN, count(CONTRIBUTION.ID))

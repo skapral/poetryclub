@@ -28,7 +28,7 @@ package com.github.skapral.poetryclub.core.time;
 
 import com.pragmaticobjects.oo.atom.anno.NotAtom;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 /**
  * Faked-out system time
@@ -37,7 +37,7 @@ import java.time.LocalDateTime;
  */
 public class SystimeFaked implements SystemTime {
     @Override
-    public final LocalDateTime time() {
+    public final ZonedDateTime time() {
         return Memory.TIME;
     }
 
@@ -46,6 +46,6 @@ public class SystimeFaked implements SystemTime {
      */
     @NotAtom
     public static class Memory {
-        public static volatile LocalDateTime TIME = LocalDateTime.now();
+        public static volatile ZonedDateTime TIME = ZonedDateTime.now();
     }
 }

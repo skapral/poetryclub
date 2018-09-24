@@ -26,7 +26,7 @@
 
 package com.github.skapral.poetryclub.core.time;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 /**
  * Inferred system time
@@ -45,7 +45,7 @@ public class SystimeInferred implements SystemTime {
     }
 
     @Override
-    public final LocalDateTime time() {
+    public final ZonedDateTime time() {
         return inference.systemTime().time();
     }
 }

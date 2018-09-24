@@ -21,6 +21,7 @@ public class ScalarUnapprovedContributionsThisMonth extends ScalarFromJooqRecord
     /**
      * Ctor.
      * @param communityId Community identity
+     * @param time System time
      */
     public ScalarUnapprovedContributionsThisMonth(Scalar<UUID> communityId, SystemTime time) {
         super(
@@ -42,6 +43,10 @@ public class ScalarUnapprovedContributionsThisMonth extends ScalarFromJooqRecord
         );
     }
 
+    /**
+     * Ctor.
+     * @param communityId Community identity
+     */
     public ScalarUnapprovedContributionsThisMonth(Scalar<UUID> communityId) {
         this(communityId, new SystimeAbstractedOutByProperty());
     }

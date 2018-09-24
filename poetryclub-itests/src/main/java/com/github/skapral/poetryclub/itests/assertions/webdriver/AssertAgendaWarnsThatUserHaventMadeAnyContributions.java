@@ -26,15 +26,23 @@
 
 package com.github.skapral.poetryclub.itests.assertions.webdriver;
 
-import org.assertj.core.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * Assert that agenda has warning message saying that certain user haven't made any contributions last month.
+ *
+ * @author Kapralov Sergey
+ */
 public class AssertAgendaWarnsThatUserHaventMadeAnyContributions implements WebdriverAction {
     private final String userName;
 
+    /**
+     * Ctor.
+     * @param userName User name
+     */
     public AssertAgendaWarnsThatUserHaventMadeAnyContributions(String userName) {
         this.userName = userName;
     }

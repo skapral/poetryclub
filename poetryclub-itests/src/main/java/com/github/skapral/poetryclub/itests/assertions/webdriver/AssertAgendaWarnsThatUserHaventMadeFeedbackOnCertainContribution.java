@@ -31,10 +31,21 @@ import org.openqa.selenium.WebDriver;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * Assert that agenda has warning message saying that certain user haven't made any feedback on certain contribution
+ * last month.
+ *
+ * @author Kapralov Sergey
+ */
 public class AssertAgendaWarnsThatUserHaventMadeFeedbackOnCertainContribution implements WebdriverAction {
     private final String userName;
     private final String contributionUrl;
 
+    /**
+     * Ctor.
+     * @param userName User's name
+     * @param contributionUrl Contribution URL
+     */
     public AssertAgendaWarnsThatUserHaventMadeFeedbackOnCertainContribution(String userName, String contributionUrl) {
         this.userName = userName;
         this.contributionUrl = contributionUrl;

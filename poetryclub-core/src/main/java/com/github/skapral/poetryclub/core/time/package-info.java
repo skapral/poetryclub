@@ -24,29 +24,4 @@
  *
  */
 
-package com.github.skapral.poetryclub.itests.assertions.webdriver;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
-/**
- * Assert that agenda has a warning message to the currently logged in user that he/she didn't made any contributions
- *
- * @author Kapralov Sergey
- */
-public class AssertAgendaWarnsAboutTheAbsenseOfContributions implements WebdriverAction {
-    @Override
-    public final void execute(WebDriver driver) {
-        boolean warning = driver.findElements(
-            By.tagName("div")
-        ).stream().map(e -> e.getText())
-            .anyMatch(str -> str.contains(
-                String.format(
-                    "You haven't made any contributions last month."
-                )
-            ));
-        assertThat(warning).isTrue();
-    }
-}
+package com.github.skapral.poetryclub.core.time;

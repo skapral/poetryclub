@@ -31,9 +31,17 @@ import org.openqa.selenium.WebDriver;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * Asserts that agenda has a warning message to the currently logged in user that he/she haven't made any feedback to
+ * certain contribution
+ */
 public class AssertAgendaWarnsAboutTheAbsenseOfFeedbackOnContribution implements WebdriverAction {
     private final String contributionUrl;
 
+    /**
+     * Ctor.
+     * @param contributionUrl Contribution URL
+     */
     public AssertAgendaWarnsAboutTheAbsenseOfFeedbackOnContribution(String contributionUrl) {
         this.contributionUrl = contributionUrl;
     }

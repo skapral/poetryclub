@@ -17,7 +17,17 @@ import static org.jooq.generated.Tables.MEMBER;
 import static org.jooq.generated.tables.Account.ACCOUNT;
 import static org.jooq.impl.DSL.*;
 
+/**
+ * Collection of users, who made no contributions in previous month
+ *
+ * @author Kapralov Sergey
+ */
 public class ScalarUsersWhoHaventMadeAnyContributionLastMonth extends ScalarFromJooqRecords {
+    /**
+     * Ctor.
+     * @param communityId Community id
+     * @param time System time
+     */
     public ScalarUsersWhoHaventMadeAnyContributionLastMonth(Scalar<UUID> communityId, SystemTime time) {
         super(
             new DbaPoetryClub(),
@@ -45,6 +55,10 @@ public class ScalarUsersWhoHaventMadeAnyContributionLastMonth extends ScalarFrom
         );
     }
 
+    /**
+     * Ctor.
+     * @param communityId Community id
+     */
     public ScalarUsersWhoHaventMadeAnyContributionLastMonth(Scalar<UUID> communityId) {
         this(
             communityId,

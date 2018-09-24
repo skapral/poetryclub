@@ -30,7 +30,7 @@ import java.time.LocalDateTime;
 
 /**
  * System time
- * @Author Kapralov Sergey
+ * @author Kapralov Sergey
  */
 public interface SystemTime {
     /**

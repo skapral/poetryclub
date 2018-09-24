@@ -22,6 +22,7 @@ public class ScalarUserContributionsThisMonth extends ScalarFromJooqRecords {
      * Ctor.
      * @param userName User login
      * @param community Community identity
+     * @param time System time
      */
     public ScalarUserContributionsThisMonth(Scalar<String> userName, Scalar<UUID> community, SystemTime time) {
         super(
@@ -43,6 +44,11 @@ public class ScalarUserContributionsThisMonth extends ScalarFromJooqRecords {
         );
     }
 
+    /**
+     * Ctor.
+     * @param userName User login
+     * @param community Community identity
+     */
     public ScalarUserContributionsThisMonth(Scalar<String> userName, Scalar<UUID> community) {
         this(userName, community, new SystimeAbstractedOutByProperty());
     }

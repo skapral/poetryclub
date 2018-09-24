@@ -5,9 +5,18 @@ import org.openqa.selenium.WebDriver;
 
 import java.time.LocalDateTime;
 
+/**
+ * Sets fake time to certain value
+ *
+ * @author Kapralov Sergey
+ */
 public class FakeTime implements WebdriverAction {
     private final LocalDateTime time;
 
+    /**
+     * Ctor
+     * @param time time
+     */
     public FakeTime(LocalDateTime time) {
         this.time = time;
     }

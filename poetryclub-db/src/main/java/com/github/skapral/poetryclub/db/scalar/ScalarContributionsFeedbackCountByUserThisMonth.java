@@ -3,15 +3,11 @@ package com.github.skapral.poetryclub.db.scalar;
 import com.github.skapral.poetryclub.core.scalar.Scalar;
 import com.github.skapral.poetryclub.core.time.SystemTime;
 import com.github.skapral.poetryclub.core.time.SystimeAbstractedOutByProperty;
-import com.github.skapral.poetryclub.core.time.SystimeReal;
-import com.github.skapral.poetryclub.db.access.DatabaseAccess;
 import com.github.skapral.poetryclub.db.access.DbaPoetryClub;
-import org.jooq.ResultQuery;
 
 import java.time.LocalDate;
 import java.time.Year;
 import java.util.UUID;
-import java.util.function.Supplier;
 
 import static org.jooq.generated.Tables.*;
 import static org.jooq.impl.DSL.*;
@@ -26,6 +22,7 @@ public class ScalarContributionsFeedbackCountByUserThisMonth extends ScalarFromJ
      * Ctor.
      * @param userName User's login
      * @param communityId Community identity
+     * @param time System time
      */
     public ScalarContributionsFeedbackCountByUserThisMonth(Scalar<String> userName, Scalar<UUID> communityId, SystemTime time) {
         super(
@@ -62,6 +59,11 @@ public class ScalarContributionsFeedbackCountByUserThisMonth extends ScalarFromJ
         );
     }
 
+    /**
+     * Ctor.
+     * @param userName User's login
+     * @param communityId Community identity
+     */
     public ScalarContributionsFeedbackCountByUserThisMonth(Scalar<String> userName, Scalar<UUID> communityId) {
         this(
             userName,

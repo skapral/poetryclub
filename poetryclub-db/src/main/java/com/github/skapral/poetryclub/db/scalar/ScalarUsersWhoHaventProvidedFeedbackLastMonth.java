@@ -30,7 +30,6 @@ import com.github.skapral.poetryclub.core.scalar.Scalar;
 import com.github.skapral.poetryclub.core.time.SystemTime;
 import com.github.skapral.poetryclub.core.time.SystimeAbstractedOutByProperty;
 import com.github.skapral.poetryclub.db.access.DbaPoetryClub;
-import org.jooq.impl.DSL;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -42,7 +41,17 @@ import static org.jooq.generated.Tables.*;
 import static org.jooq.generated.tables.Account.ACCOUNT;
 import static org.jooq.impl.DSL.*;
 
+/**
+ * Collection of users who have not provided feedback on some contribution in previous month
+ *
+ * @author Kapralov Sergey
+ */
 public class ScalarUsersWhoHaventProvidedFeedbackLastMonth extends ScalarFromJooqRecords {
+    /**
+     * Ctor.
+     * @param communityId Community Id
+     * @param time System time
+     */
     public ScalarUsersWhoHaventProvidedFeedbackLastMonth(Scalar<UUID> communityId, SystemTime time) {
         super(
             new DbaPoetryClub(),
@@ -72,6 +81,10 @@ public class ScalarUsersWhoHaventProvidedFeedbackLastMonth extends ScalarFromJoo
         );
     }
 
+    /**
+     * Ctor.
+     * @param communityId Community Id
+     */
     public ScalarUsersWhoHaventProvidedFeedbackLastMonth(Scalar<UUID> communityId) {
         this(
             communityId,

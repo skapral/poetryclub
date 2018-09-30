@@ -7,7 +7,7 @@
     <groupId>com.github.skapral.poetryclub</groupId>
     <artifactId>poetryclub</artifactId>
     <packaging>pom</packaging>
-    <version>0.0.0-SNAPSHOT</version>
+    <version>0.0.1</version>
     <modules>
         <module>poetryclub-db</module>
         <module>poetryclub-core</module>

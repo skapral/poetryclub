@@ -35,14 +35,11 @@ import com.github.skapral.poetryclub.core.config.CpStatic;
  *
  * @author Kapralov Sergey
  */
-public class Cp_TEST_ENV extends CpOneOf {
+public class Cp_TEST_ENV extends CpEnvironment {
     /**
      * Ctor.
      */
     public Cp_TEST_ENV() {
-        super(
-            new CpEnvironment("TEST_ENV"),
-            new CpStatic("false")
-        );
+        super("TEST_ENV");
     }
 }

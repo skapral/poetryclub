@@ -32,21 +32,35 @@ import org.openqa.selenium.WebDriver;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Assert that agenda has a warning message to the currently logged in user that he/she didn't made any contributions
+ * Assert that agenda has warning message saying that certain user haven't made any contributions last month.
  *
  * @author Kapralov Sergey
  */
-public class AssertAgendaWarnsAboutTheAbsenseOfContributions implements WebdriverAction {
+public class AssertAgendaReportsThatUserHaventMadeAnyContributions implements WebdriverAction {
+    private final boolean status;
+    private final String userName;
+
+    /**
+     * Ctor.
+     * @param status true of should present, false is shouldn't
+     * @param userName User name
+     */
+    public AssertAgendaReportsThatUserHaventMadeAnyContributions(boolean status, String userName) {
+        this.status = status;
+        this.userName = userName;
+    }
+
     @Override
     public final void execute(WebDriver driver) {
         boolean warning = driver.findElements(
             By.tagName("div")
         ).stream().map(e -> e.getText())
-            .anyMatch(str -> str.contains(
+            .anyMatch(str -> str.equals(
                 String.format(
-                    "You haven't made any contributions last month."
+                    "User %s haven't made any contributions last month.",
+                    userName
                 )
             ));
-        assertThat(warning).isTrue();
+        assertThat(warning).isEqualTo(status);
     }
 }

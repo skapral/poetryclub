@@ -32,18 +32,19 @@ import org.openqa.selenium.WebDriver;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Asserts that agenda has a warning message to the currently logged in user that he/she haven't made any feedback to
- * certain contribution
+ * Assert that agenda has a warning message to the currently logged in user that he/she didn't made any contributions
+ *
+ * @author Kapralov Sergey
  */
-public class AssertAgendaWarnsAboutTheAbsenseOfFeedbackOnContribution implements WebdriverAction {
-    private final String contributionUrl;
+public class AssertAgendaReportsViolationAboutTheAbsenseOfContributions implements WebdriverAction {
+    private final boolean status;
 
     /**
      * Ctor.
-     * @param contributionUrl Contribution URL
+     * @param status true if should present, false if should not
      */
-    public AssertAgendaWarnsAboutTheAbsenseOfFeedbackOnContribution(String contributionUrl) {
-        this.contributionUrl = contributionUrl;
+    public AssertAgendaReportsViolationAboutTheAbsenseOfContributions(boolean status) {
+        this.status = status;
     }
 
     @Override
@@ -53,10 +54,9 @@ public class AssertAgendaWarnsAboutTheAbsenseOfFeedbackOnContribution implements
         ).stream().map(e -> e.getText())
             .anyMatch(str -> str.contains(
                 String.format(
-                    "You haven't left any feedback to contribution %s last month.",
-                    contributionUrl
+                    "You haven't made any contributions last month."
                 )
             ));
-        assertThat(warning).isTrue();
+        assertThat(warning).isEqualTo(status);
     }
 }

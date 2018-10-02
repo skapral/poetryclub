@@ -148,12 +148,12 @@ public class IntegrationTest extends TestsSuite {
                         new ApproveMembershipOnAgenda("user"),
                         new SubmitContributionOnAgenda("http://contribution1"),
                         new SubmitContributionOnAgenda("http://contribution2"),
-                        new FakeTime(LocalDateTime.of(2017, 9, 1, 12, 00).atZone(ZoneId.of("UTC"))),
+                        new FakeTime(LocalDateTime.of(2017, 9, 1, 12, 00, 01).atZone(ZoneId.of("UTC"))),
                         new AuthenticateAsUser("owner"),
                         new OpenCommunityAgenda("Test community"),
-                        new AssertAgendaWarnsThatUserHaventMadeAnyContributions("user"),
-                        new AssertAgendaWarnsThatUserHaventMadeFeedbackOnCertainContribution("user", "http://contribution1"),
-                        new AssertAgendaWarnsThatUserHaventMadeFeedbackOnCertainContribution("user", "http://contribution2")
+                        new AssertAgendaReportsThatUserHaventMadeAnyContributions(true, "user"),
+                        new AssertAgendaReportsThatUserHaventMadeFeedbackOnCertainContribution(true, "user", "http://contribution1"),
+                        new AssertAgendaReportsThatUserHaventMadeFeedbackOnCertainContribution(true, "user", "http://contribution2")
                     )
                 )
             ),
@@ -171,12 +171,34 @@ public class IntegrationTest extends TestsSuite {
                         new ApproveMembershipOnAgenda("user"),
                         new SubmitContributionOnAgenda("http://contribution1"),
                         new SubmitContributionOnAgenda("http://contribution2"),
-                        new FakeTime(LocalDateTime.of(2017, 9, 1, 12, 00).atZone(ZoneId.of("UTC"))),
+                        new FakeTime(LocalDateTime.of(2017, 9, 1, 12, 00, 01).atZone(ZoneId.of("UTC"))),
                         new AuthenticateAsUser("user"),
                         new OpenCommunityAgenda("Test community"),
-                        new AssertAgendaWarnsAboutTheAbsenseOfContributions(),
-                        new AssertAgendaWarnsAboutTheAbsenseOfFeedbackOnContribution("http://contribution1"),
-                        new AssertAgendaWarnsAboutTheAbsenseOfFeedbackOnContribution("http://contribution2")
+                        new AssertAgendaReportsViolationAboutTheAbsenseOfContributions(true),
+                        new AssertAgendaReportsViolationAboutTheAbsenseOfFeedbackOnContribution(true,"http://contribution1"),
+                        new AssertAgendaReportsViolationAboutTheAbsenseOfFeedbackOnContribution(true, "http://contribution2")
+                    )
+                )
+            ),
+            new TestCase(
+                "Agenda doesn't show violations for the users who recently joined in",
+                new AssertAssumingPoetryclubInstance(
+                    new AssertWebdriverScenario(
+                        new FakeTime(LocalDateTime.of(2017, 8, 1, 12, 00).atZone(ZoneId.of("UTC"))),
+                        new AuthenticateAsUser("owner"),
+                        new CreateCommunity("Test community"),
+                        new OpenCommunityAgenda("Test community"),
+                        new SubmitContributionOnAgenda("http://contribution"),
+                        new FakeTime(LocalDateTime.of(2017, 9, 1, 12, 00, 01).atZone(ZoneId.of("UTC"))),
+                        new AuthenticateAsUser("innocent_user"),
+                        new JoinCommunity("Test community"),
+                        new OpenCommunityAgenda("Test community"),
+                        new AssertAgendaReportsViolationAboutTheAbsenseOfContributions(false),
+                        new AssertAgendaReportsViolationAboutTheAbsenseOfFeedbackOnContribution(false,"http://contribution"),
+                        new AuthenticateAsUser("owner"),
+                        new OpenCommunityAgenda("Test community"),
+                        new AssertAgendaReportsThatUserHaventMadeAnyContributions(false, "innocent_user"),
+                        new AssertAgendaReportsThatUserHaventMadeFeedbackOnCertainContribution(false, "innocent_user", "http://contribution")
                     )
                 )
             ),

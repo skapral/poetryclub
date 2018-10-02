@@ -4,13 +4,13 @@ import com.github.skapral.poetryclub.core.scalar.Scalar;
 import com.github.skapral.poetryclub.core.time.SystemTime;
 import com.github.skapral.poetryclub.core.time.SystimeAbstractedOutByProperty;
 import com.github.skapral.poetryclub.db.access.DbaPoetryClub;
-import org.jooq.generated.Tables;
+import com.github.skapral.poetryclub.db.jooq.Tables;
 
 import java.net.URL;
 import java.sql.Timestamp;
 import java.util.UUID;
 
-import static org.jooq.generated.Tables.CONTRIBUTION;
+import static com.github.skapral.poetryclub.db.jooq.Tables.CONTRIBUTION;
 import static org.jooq.impl.DSL.*;
 
 /**

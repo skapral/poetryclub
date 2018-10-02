@@ -3,7 +3,7 @@ package com.github.skapral.poetryclub.db.scalar;
 import com.github.skapral.poetryclub.core.scalar.Scalar;
 import com.github.skapral.poetryclub.db.access.DbaPoetryClub;
 
-import static org.jooq.generated.Tables.*;
+import static com.github.skapral.poetryclub.db.jooq.Tables.*;
 import static org.jooq.impl.DSL.select;
 
 /**

@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.time.Year;
 import java.util.UUID;
 
-import static org.jooq.generated.Tables.*;
+import static com.github.skapral.poetryclub.db.jooq.Tables.*;
 import static org.jooq.impl.DSL.month;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.year;

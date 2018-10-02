@@ -6,7 +6,7 @@ import org.jooq.impl.DSL;
 
 import java.util.UUID;
 
-import static org.jooq.generated.Tables.COMMUNITY;
+import static com.github.skapral.poetryclub.db.jooq.Tables.COMMUNITY;
 
 /**
  * Community name by identity

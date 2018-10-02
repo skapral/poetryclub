@@ -37,16 +37,19 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  * @author Kapralov Sergey
  */
-public class AssertAgendaWarnsThatUserHaventMadeFeedbackOnCertainContribution implements WebdriverAction {
+public class AssertAgendaReportsThatUserHaventMadeFeedbackOnCertainContribution implements WebdriverAction {
+    private final boolean status;
     private final String userName;
     private final String contributionUrl;
 
     /**
      * Ctor.
+     * @param status true if should present, false if should not
      * @param userName User's name
      * @param contributionUrl Contribution URL
      */
-    public AssertAgendaWarnsThatUserHaventMadeFeedbackOnCertainContribution(String userName, String contributionUrl) {
+    public AssertAgendaReportsThatUserHaventMadeFeedbackOnCertainContribution(boolean status, String userName, String contributionUrl) {
+        this.status = status;
         this.userName = userName;
         this.contributionUrl = contributionUrl;
     }
@@ -63,6 +66,6 @@ public class AssertAgendaWarnsThatUserHaventMadeFeedbackOnCertainContribution im
                     contributionUrl
                 )
             ));
-        assertThat(warning).isTrue();
+        assertThat(warning).isEqualTo(status);
     }
 }

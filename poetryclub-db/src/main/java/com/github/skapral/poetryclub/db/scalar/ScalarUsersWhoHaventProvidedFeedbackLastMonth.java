@@ -31,6 +31,7 @@ import com.github.skapral.poetryclub.core.time.SystemTime;
 import com.github.skapral.poetryclub.core.time.SystimeAbstractedOutByProperty;
 import com.github.skapral.poetryclub.db.access.DbaPoetryClub;
 
+import java.sql.Timestamp;
 import java.time.*;
 import java.util.UUID;
 
@@ -63,7 +64,8 @@ public class ScalarUsersWhoHaventProvidedFeedbackLastMonth extends ScalarFromJoo
                             select(COMMUNITY.ID).from(COMMUNITY).where(COMMUNITY.UUID.eq(communityId.value()))
                         ),
                         MEMBER.ACCOUNTID.eq(ACCOUNT.ID),
-                        MEMBER.ROLE.ne("banned")
+                        MEMBER.ROLE.ne("banned"),
+                        MEMBER.TIMESTAMP.lt(new Timestamp(time.time().minusMonths(1).toInstant().toEpochMilli()))
                     )
                     .leftJoin(CONTRIBUTION).on(
                         CONTRIBUTION.ACCOUNTID.ne(ACCOUNT.ID),

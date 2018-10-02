@@ -9,6 +9,7 @@ import com.github.skapral.poetryclub.db.jooq.Keys;
 import com.github.skapral.poetryclub.db.jooq.Public;
 import com.github.skapral.poetryclub.db.jooq.tables.records.MemberRecord;
 
+import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
 
@@ -40,7 +41,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Member extends TableImpl<MemberRecord> {
 
-    private static final long serialVersionUID = -1094483549;
+    private static final long serialVersionUID = 721065823;
 
     /**
      * The reference instance of <code>public.member</code>
@@ -69,6 +70,11 @@ public class Member extends TableImpl<MemberRecord> {
      * The column <code>public.member.role</code>.
      */
     public final TableField<MemberRecord, String> ROLE = createField("role", org.jooq.impl.SQLDataType.VARCHAR(255), this, "");
+
+    /**
+     * The column <code>public.member.timestamp</code>.
+     */
+    public final TableField<MemberRecord, Timestamp> TIMESTAMP = createField("timestamp", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false), this, "");
 
     /**
      * Create a <code>public.member</code> table reference

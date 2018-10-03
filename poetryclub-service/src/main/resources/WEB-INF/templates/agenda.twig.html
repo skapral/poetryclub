@@ -79,8 +79,9 @@
             {% if item.login != user %}
             <div class="alert alert-danger" role="alert">
                 User {{ item.login }} haven't made any contributions last month.
-                <form method="post" action="{{ item.login }}/banMember">
-                    <input type="submit" value="Ban">
+                <form method="post">
+                    <input type="submit" formaction="{{ item.login }}/banMember" value="Ban">
+                    <input type="submit" formaction="{{ item.login }}/forgiveMember" value="Forgive">
                 </form>
             </div>
             {% endif %}
@@ -90,8 +91,9 @@
             <div class="alert alert-warning" role="alert">
                 User {{ item.login }} haven't left any feedback to contribution <a href="{{ item.url }}">{{ item.url }}</a>
                 last month.
-                <form method="post" action="{{ item.login }}/banMember">
-                    <input type="submit" value="Ban">
+                <form method="post">
+                    <input type="submit" formaction="{{ item.login }}/banMember" value="Ban">
+                    <input type="submit" formaction="{{ item.login }}/forgiveMember" value="Forgive">
                 </form>
             </div>
             {% endif %}

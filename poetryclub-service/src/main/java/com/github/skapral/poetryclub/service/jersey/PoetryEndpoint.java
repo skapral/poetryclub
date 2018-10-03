@@ -285,4 +285,29 @@ public class PoetryEndpoint {
         ).execute();
         return Response.seeOther(URI.create(URLEncoder.encode(communityId, "UTF-8") + "/index.html")).build();
     }
+
+    /**
+     *
+     * @param communityId Community identity
+     * @param userLogin User Login
+     * @param req Request
+     * @return Response
+     * @throws Exception if something goes wrong
+     */
+    @POST
+    @Path("{communityId}/{user}/forgiveMember")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public Response forgiveMember(@PathParam("communityId") String communityId,
+                              @PathParam("user") String userLogin,
+                              @Context HttpServletRequest req) throws Exception {
+        new OpAuthorizedForAdmin(
+            req,
+            new ScalarUUID(communityId),
+            new OpForgiveMember(
+                new ScalarStatic<>(userLogin),
+                new ScalarUUID(communityId)
+            )
+        ).execute();
+        return Response.seeOther(URI.create(URLEncoder.encode(communityId, "UTF-8") + "/index.html")).build();
+    }
 }

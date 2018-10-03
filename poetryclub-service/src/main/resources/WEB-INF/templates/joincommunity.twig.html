@@ -11,10 +11,13 @@
         <form method="post" action="joincommunity">
             {% for community in communities %}
             {% if (community.role == "undefined") %}
-            <p><input name="uuid" communityname="{{ community.name }}" type="radio" value="{{ community.uuid }}">{{ community.name }}</p>
+            <label>
+                <input name="uuid" communityname="{{ community.name }}" type="radio" value="{{ community.uuid }}">
+                {{ community.name }}
+            </label>
             {% endif %}
             {% endfor %}
-            <input type="submit" value="Proceed">
+            <input type="submit" value="Submit">
         </form>
     </div>
     </body>

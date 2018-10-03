@@ -11,7 +11,7 @@
     <a href="summary.html">Overall summary</a>
 
     {% if empty(contributions) %}
-    <div class="alert alert-danger" role="alert">
+    <div class="alert alert-danger" role="alert" messagetype="contributions">
         You haven't made any contributions this month.
 
         <form action="newcontribution" method="post">
@@ -21,7 +21,7 @@
         </form>
     </div>
     {% else %}
-    <div class="alert alert-info" role="alert">
+    <div class="alert alert-info" role="alert" messagetype="contributions">
         Contributions made by you this month:
         <ul>
         {% for contribution in contributions %}

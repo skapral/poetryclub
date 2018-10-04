@@ -65,6 +65,12 @@ public class OpForgiveMember extends OpJooq {
         );
     }
 
+    /**
+     * Ctor.
+     * 
+     * @param accountLogin Account login
+     * @param community Community
+     */
     public OpForgiveMember(Scalar<String> accountLogin, Scalar<UUID> community) {
         this(accountLogin, community, new SystimeAbstractedOutByProperty());
     }

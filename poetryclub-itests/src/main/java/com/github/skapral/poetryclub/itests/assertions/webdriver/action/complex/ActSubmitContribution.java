@@ -30,7 +30,7 @@ import com.github.skapral.poetryclub.itests.assertions.webdriver.action.ActClick
 import com.github.skapral.poetryclub.itests.assertions.webdriver.action.ActTypeText;
 import com.github.skapral.poetryclub.itests.assertions.webdriver.poi.PoiInput;
 import com.github.skapral.poetryclub.itests.assertions.webdriver.poi.PoiSubmitButton;
-import com.github.skapral.poetryclub.itests.assertions.webdriver.poi.PoiSubmitContributionForm;
+import com.github.skapral.poetryclub.itests.assertions.webdriver.poi.agenda.AgendaContributionsMessage;
 
 public class ActSubmitContribution extends ActComplex {
     public ActSubmitContribution(String url) {
@@ -39,13 +39,13 @@ public class ActSubmitContribution extends ActComplex {
                 url,
                 new PoiInput(
                     "url",
-                    new PoiSubmitContributionForm()
+                    new AgendaContributionsMessage()
                 )
             ),
             new ActClick(
                 new PoiSubmitButton(
                     "Submit",
-                    new PoiSubmitContributionForm()
+                    new AgendaContributionsMessage()
                 )
             )
         );

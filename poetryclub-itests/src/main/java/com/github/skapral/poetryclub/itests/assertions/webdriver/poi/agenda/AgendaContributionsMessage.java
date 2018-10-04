@@ -24,20 +24,22 @@
  *
  */
 
-package com.github.skapral.poetryclub.itests.assertions.webdriver.check;
+package com.github.skapral.poetryclub.itests.assertions.webdriver.poi.agenda;
 
-import com.github.skapral.poetryclub.itests.assertions.webdriver.poi.WebdriverPOI;
-import org.openqa.selenium.WebDriver;
+import com.github.skapral.poetryclub.itests.assertions.webdriver.poi.PoiEither;
+import com.github.skapral.poetryclub.itests.assertions.webdriver.poi.PoiInferred;
 
-public class HypAbsent implements WebdriverHypothesis {
-    private final WebdriverPOI poi;
-
-    public HypAbsent(WebdriverPOI poi) {
-        this.poi = poi;
-    }
-
-    @Override
-    public final boolean truth(WebDriver driver) {
-        return poi.webElement(driver).isEmpty();
+public class AgendaContributionsMessage extends PoiInferred {
+    public AgendaContributionsMessage() {
+        super(
+            () -> new PoiEither(
+                new AgendaMessage(
+                    "You haven't made any contributions this month."
+                ),
+                new AgendaMessage(
+                    "Contributions made by you this month:"
+                )
+            )
+        );
     }
 }

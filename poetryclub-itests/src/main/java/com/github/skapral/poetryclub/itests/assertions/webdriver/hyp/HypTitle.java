@@ -24,7 +24,7 @@
  *
  */
 
-package com.github.skapral.poetryclub.itests.assertions.webdriver.check;
+package com.github.skapral.poetryclub.itests.assertions.webdriver.hyp;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

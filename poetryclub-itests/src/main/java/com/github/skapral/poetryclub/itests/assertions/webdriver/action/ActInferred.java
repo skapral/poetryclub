@@ -28,9 +28,18 @@ package com.github.skapral.poetryclub.itests.assertions.webdriver.action;
 
 import org.openqa.selenium.WebDriver;
 
+/**
+ * Inferred action.
+ * 
+ * @author skapral
+ */
 public class ActInferred implements WebdriverAction {
     private final Inference inference;
 
+    /**
+     * Ctor.
+     * @param inference Inference
+     */
     public ActInferred(Inference inference) {
         this.inference = inference;
     }

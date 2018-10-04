@@ -29,9 +29,18 @@ package com.github.skapral.poetryclub.itests.assertions.webdriver.action;
 import com.github.skapral.poetryclub.itests.assertions.webdriver.poi.WebdriverPOI;
 import org.openqa.selenium.WebDriver;
 
+/**
+ * Click on some POI
+ * 
+ * @author skapral
+ */
 public class ActClick implements WebdriverAction {
     private final WebdriverPOI poi;
 
+    /**
+     * Ctor.
+     * @param poi POI to click on
+     */
     public ActClick(WebdriverPOI poi) {
         this.poi = poi;
     }

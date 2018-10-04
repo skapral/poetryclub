@@ -29,9 +29,17 @@ package com.github.skapral.poetryclub.itests.assertions.webdriver.hyp;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+/**
+ * Hypothesis that currently opened page has H1 tag with certain text
+ * @author skapral
+ */
 public class HypTitle implements WebdriverHypothesis {
     private final String title;
 
+    /**
+     * Ctor.
+     * @param title Text
+     */
     public HypTitle(String title) {
         this.title = title;
     }

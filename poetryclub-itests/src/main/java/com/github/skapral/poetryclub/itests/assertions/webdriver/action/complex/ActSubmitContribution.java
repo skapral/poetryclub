@@ -32,7 +32,16 @@ import com.github.skapral.poetryclub.itests.assertions.webdriver.poi.PoiInput;
 import com.github.skapral.poetryclub.itests.assertions.webdriver.poi.PoiSubmitButton;
 import com.github.skapral.poetryclub.itests.assertions.webdriver.poi.agenda.AgendaContributionsMessage;
 
+/**
+ * Submit new contribution on agenda.
+ * 
+ * @author skapral
+ */
 public class ActSubmitContribution extends ActComplex {
+    /**
+     * Ctor.
+     * @param url Contribution's URL
+     */
     public ActSubmitContribution(String url) {
         super(
             new ActTypeText(

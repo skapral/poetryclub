@@ -28,9 +28,19 @@ package com.github.skapral.poetryclub.itests.assertions.webdriver.action;
 
 import org.openqa.selenium.WebDriver;
 
+/**
+ * Authenticates at Poetryclub instance as certain user. Implementation assumes 
+ * that Poetryclub is deployed with faked authentication
+ * 
+ * @author skapral
+ */
 public class ActAuthenticateAsUser implements WebdriverAction {
     private final String userLogin;
 
+    /**
+     * Ctor.
+     * @param userLogin Login of the user.
+     */
     public ActAuthenticateAsUser(String userLogin) {
         this.userLogin = userLogin;
     }

@@ -30,9 +30,18 @@ import io.vavr.control.Option;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+/**
+ * Inferred POI
+ * 
+ * @author skapral
+ */
 public class PoiInferred implements WebdriverPOI {
     private final Inference inference;
 
+    /**
+     * Ctor.
+     * @param inference Inference
+     */
     public PoiInferred(Inference inference) {
         this.inference = inference;
     }

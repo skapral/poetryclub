@@ -31,13 +31,26 @@ import io.vavr.control.Option;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+/**
+ * First non-absent POI from many.
+ * 
+ * @author skapral
+ */
 public class PoiEither implements WebdriverPOI {
     private final List<WebdriverPOI> poi;
 
+    /**
+     * Ctor.
+     * @param poi POI
+     */
     public PoiEither(List<WebdriverPOI> poi) {
         this.poi = poi;
     }
 
+    /**
+     * Ctor.
+     * @param poi POI
+     */
     public PoiEither(WebdriverPOI... poi) {
         this(List.of(poi));
     }

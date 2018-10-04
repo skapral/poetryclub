@@ -30,14 +30,26 @@ import com.github.skapral.poetryclub.itests.assertions.webdriver.action.Webdrive
 import io.vavr.collection.List;
 import org.openqa.selenium.WebDriver;
 
-
+/**
+ * Complex action, consisting of a sequence of simpler actions
+ * 
+ * @author skapral
+ */
 public class ActComplex implements WebdriverAction {
     private final List<WebdriverAction> actions;
 
+    /**
+     * Ctor.
+     * @param actions Actions
+     */
     public ActComplex(List<WebdriverAction> actions) {
         this.actions = actions;
     }
 
+    /**
+     * Ctor.
+     * @param actions Actions
+     */
     public ActComplex(WebdriverAction... actions) {
         this(List.of(actions));
     }

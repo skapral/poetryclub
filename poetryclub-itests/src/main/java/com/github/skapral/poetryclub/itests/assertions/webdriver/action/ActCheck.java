@@ -30,10 +30,18 @@ import com.github.skapral.poetryclub.itests.assertions.webdriver.hyp.WebdriverHy
 import org.assertj.core.api.Assertions;
 import org.openqa.selenium.WebDriver;
 
-
+/**
+ * Checks for certain hypothesis.
+ * 
+ * @author skapral
+ */
 public class ActCheck implements WebdriverAction {
     private final WebdriverHypothesis hypothesis;
 
+    /**
+     * Ctor.
+     * @param hypothesis Hypothesis
+     */
     public ActCheck(WebdriverHypothesis hypothesis) {
         this.hypothesis = hypothesis;
     }

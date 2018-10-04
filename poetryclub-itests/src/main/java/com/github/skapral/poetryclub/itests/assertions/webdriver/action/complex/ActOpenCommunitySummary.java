@@ -29,7 +29,14 @@ package com.github.skapral.poetryclub.itests.assertions.webdriver.action.complex
 import com.github.skapral.poetryclub.itests.assertions.webdriver.action.ActClick;
 import com.github.skapral.poetryclub.itests.assertions.webdriver.poi.PoiLink;
 
+/**
+ * Opens community summary by clicking a link on agenda
+ * @author skapral
+ */
 public class ActOpenCommunitySummary extends ActComplex {
+    /**
+     * Ctor.
+     */
     public ActOpenCommunitySummary() {
         super(
             new ActClick(

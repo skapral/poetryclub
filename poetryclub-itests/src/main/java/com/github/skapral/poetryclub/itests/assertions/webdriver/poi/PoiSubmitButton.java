@@ -31,10 +31,21 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+/**
+ * Submit button.
+ * 
+ * @author skapral
+ */
 public class PoiSubmitButton implements WebdriverPOI {
     private final String name;
     private final WebdriverPOI base;
 
+    /**
+     * Ctor.
+     * 
+     * @param name Name of the button
+     * @param base POI to search from
+     */
     public PoiSubmitButton(String name, WebdriverPOI base) {
         this.name = name;
         this.base = base;

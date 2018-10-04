@@ -29,7 +29,16 @@ package com.github.skapral.poetryclub.itests.assertions.webdriver.action.complex
 import com.github.skapral.poetryclub.itests.assertions.webdriver.action.ActClick;
 import com.github.skapral.poetryclub.itests.assertions.webdriver.poi.PoiLink;
 
+/**
+ * Open certain community agenda.
+ * 
+ * @author skapral
+ */
 public class ActOpenCommunityAgenda extends ActComplex {
+    /**
+     * Ctor.
+     * @param communityName Community name
+     */
     public ActOpenCommunityAgenda(String communityName) {
         super(
             new ActClick(

@@ -29,10 +29,21 @@ package com.github.skapral.poetryclub.itests.assertions.webdriver.action;
 import com.github.skapral.poetryclub.itests.assertions.webdriver.poi.WebdriverPOI;
 import org.openqa.selenium.WebDriver;
 
+/**
+ * Types text at certain POI
+ * 
+ * @author skapral
+ */
 public class ActTypeText implements WebdriverAction {
     private final String text;
     private final WebdriverPOI poi;
 
+    /**
+     * Ctor.
+     * 
+     * @param text Text to type
+     * @param poi POI
+     */
     public ActTypeText(String text, WebdriverPOI poi) {
         this.text = text;
         this.poi = poi;

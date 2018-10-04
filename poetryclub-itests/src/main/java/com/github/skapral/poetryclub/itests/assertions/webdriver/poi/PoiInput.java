@@ -31,10 +31,19 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+/**
+ * Certain form input
+ * @author skapral
+ */
 public class PoiInput implements WebdriverPOI {
     private final String name;
     private final WebdriverPOI poi;
 
+    /**
+     * Ctor.
+     * @param name 
+     * @param poi 
+     */
     public PoiInput(String name, WebdriverPOI poi) {
         this.name = name;
         this.poi = poi;

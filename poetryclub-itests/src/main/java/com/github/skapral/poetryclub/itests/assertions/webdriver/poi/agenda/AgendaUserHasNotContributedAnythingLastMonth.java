@@ -28,7 +28,16 @@ package com.github.skapral.poetryclub.itests.assertions.webdriver.poi.agenda;
 
 import com.github.skapral.poetryclub.itests.assertions.webdriver.poi.PoiInferred;
 
+/**
+ * Agenda message.
+ * 
+ * @author skapral
+ */
 public class AgendaUserHasNotContributedAnythingLastMonth extends PoiInferred {
+    /**
+     * Ctor.
+     * @param userName User's name
+     */
     public AgendaUserHasNotContributedAnythingLastMonth(String userName) {
         super(
             () -> new AgendaMessage(

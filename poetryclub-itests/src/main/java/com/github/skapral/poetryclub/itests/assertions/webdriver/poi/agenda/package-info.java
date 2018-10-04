@@ -24,23 +24,4 @@
  *
  */
 
-package com.github.skapral.poetryclub.itests.assertions.webdriver.action;
-
-import com.github.skapral.poetryclub.core.time.SystimeFaked;
-import org.openqa.selenium.WebDriver;
-
-import java.time.Duration;
-import java.time.ZonedDateTime;
-
-public class ActShiftSystemTime implements WebdriverAction {
-    private final Duration duration;
-
-    public ActShiftSystemTime(Duration duration) {
-        this.duration = duration;
-    }
-
-    @Override
-    public final void apply(WebDriver source) {
-        SystimeFaked.Memory.TIME = SystimeFaked.Memory.TIME.plus(duration);
-    }
-}
+package com.github.skapral.poetryclub.itests.assertions.webdriver.poi.agenda;

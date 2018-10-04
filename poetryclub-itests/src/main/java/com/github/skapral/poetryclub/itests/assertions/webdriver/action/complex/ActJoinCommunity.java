@@ -31,7 +31,15 @@ import com.github.skapral.poetryclub.itests.assertions.webdriver.poi.PoiForm;
 import com.github.skapral.poetryclub.itests.assertions.webdriver.poi.PoiRadio;
 import com.github.skapral.poetryclub.itests.assertions.webdriver.poi.PoiSubmitButton;
 
+/**
+ * Joins to the community, by choosing community from the list and submitting.
+ * @author skapral
+ */
 public class ActJoinCommunity extends ActComplex {
+    /**
+     * Ctor.
+     * @param communityName Community
+     */
     public ActJoinCommunity(String communityName) {
         super(
             new ActClick(

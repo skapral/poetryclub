@@ -31,9 +31,18 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+/**
+ * Link with certain text.
+ * 
+ * @author skapral
+ */
 public class PoiLink implements WebdriverPOI {
     private final String linkText;
 
+    /**
+     * Ctor
+     * @param linkText Text of the link
+     */
     public PoiLink(String linkText) {
         this.linkText = linkText;
     }

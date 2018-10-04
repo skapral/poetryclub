@@ -210,7 +210,7 @@ public class IntegrationTest extends TestsSuite {
                             new ActApproveMembership("user"),
                             new ActSubmitContribution("http://contribution1")
                         ),
-                        new ActShiftSystemTime(Duration.ofDays(32)),
+                        new ActWait(Duration.ofDays(32)),
                         new ActAsUser(
                             "owner",
                             new ActOpenCommunityAgenda("Test community"),
@@ -246,7 +246,7 @@ public class IntegrationTest extends TestsSuite {
                             new ActApproveMembership("user"),
                             new ActSubmitContribution("http://contribution1")
                         ),
-                        new ActShiftSystemTime(Duration.ofDays(32)),
+                        new ActWait(Duration.ofDays(32)),
                         new ActAsUser(
                             "user",
                             new ActOpenCommunityAgenda("Test community"),
@@ -274,7 +274,7 @@ public class IntegrationTest extends TestsSuite {
                             new ActOpenCommunityAgenda("Test community"),
                             new ActSubmitContribution("http://contribution1")
                         ),
-                        new ActShiftSystemTime(Duration.ofDays(32)),
+                        new ActWait(Duration.ofDays(32)),
                         new ActAsUser(
                             "innocent_user",
                             new ActJoinCommunity("Test community")

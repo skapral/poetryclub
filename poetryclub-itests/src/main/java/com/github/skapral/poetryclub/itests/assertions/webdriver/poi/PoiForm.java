@@ -31,6 +31,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+/**
+ * A "form" tag.
+ * 
+ * @author skapral
+ */
 public class PoiForm implements WebdriverPOI {
     @Override
     public final Option<WebElement> webElement(WebDriver source) {

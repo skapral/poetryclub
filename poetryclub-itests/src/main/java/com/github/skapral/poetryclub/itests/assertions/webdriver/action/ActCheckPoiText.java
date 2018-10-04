@@ -30,10 +30,20 @@ import com.github.skapral.poetryclub.itests.assertions.webdriver.poi.WebdriverPO
 import org.assertj.core.api.Assertions;
 import org.openqa.selenium.WebDriver;
 
+/**
+ * Checks that certain POI contains certain text
+ * 
+ * @author skapral
+ */
 public class ActCheckPoiText implements WebdriverAction {
     private final WebdriverPOI poi;
     private final String text;
 
+    /**
+     * Ctor.
+     * @param poi POI
+     * @param text text
+     */
     public ActCheckPoiText(WebdriverPOI poi, String text) {
         this.poi = poi;
         this.text = text;

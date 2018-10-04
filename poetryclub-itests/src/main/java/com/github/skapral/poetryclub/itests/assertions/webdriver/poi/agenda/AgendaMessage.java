@@ -32,9 +32,17 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+/**
+ * Agenda event, which contains certain message.
+ * @author skapral
+ */
 public class AgendaMessage implements WebdriverPOI {
     private final String messageText;
 
+    /**
+     * Ctor.
+     * @param messageText Text of the message
+     */
     public AgendaMessage(String messageText) {
         this.messageText = messageText;
     }

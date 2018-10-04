@@ -30,11 +30,28 @@ import io.vavr.control.Option;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+/**
+ * Web Driver's Point of interest - certain element on page, which has some importance
+ * to the test scenarios. May be absent.
+ * 
+ * @author skapral
+ */
 public interface WebdriverPOI {
+    /**
+     * @param source Web driver, to where the POI is searched
+     * @return web element, if found
+     */
     Option<WebElement> webElement(WebDriver source);
 
+    /**
+     * {@link WebdriverPOI} inference.
+     * @author skapral
+     */
     @FunctionalInterface
     interface Inference {
+        /**
+         * @return Inferred poi
+         */
         WebdriverPOI poi();
     }
 }

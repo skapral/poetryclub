@@ -23,19 +23,5 @@
  *
  *
  */
-package com.github.skapral.poetryclub.itests.assertions.webdriver;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-
-/**
- * Opens community summary
- *
- * @author Kapralov Sergey
- */
-public class OpenCommunitySummary implements WebdriverAction {
-    @Override
-    public final void execute(WebDriver driver) {
-        driver.findElement(By.linkText("Overall summary")).click();
-    }
-}
+package com.github.skapral.poetryclub.itests.assertions.webdriver.action.complex;

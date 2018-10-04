@@ -28,10 +28,25 @@ package com.github.skapral.poetryclub.itests.assertions.webdriver.action;
 
 import org.openqa.selenium.WebDriver;
 
+/**
+ * Action on Web driver.
+ * 
+ * @author skapral
+ */
 public interface WebdriverAction {
+    /**
+     * Apply action
+     * @param source webdriver to which the action should be applied
+     */
     void apply(WebDriver source);
 
+    /**
+     * {@link WebdriverAction} inference
+     */
     @FunctionalInterface interface Inference {
+        /**
+         * @return Inferred webdriver action
+         */
         WebdriverAction webdriverAction();
     }
 }

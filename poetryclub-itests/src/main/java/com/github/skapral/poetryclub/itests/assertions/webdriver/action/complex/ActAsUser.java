@@ -29,7 +29,17 @@ package com.github.skapral.poetryclub.itests.assertions.webdriver.action.complex
 import com.github.skapral.poetryclub.itests.assertions.webdriver.action.ActAuthenticateAsUser;
 import com.github.skapral.poetryclub.itests.assertions.webdriver.action.WebdriverAction;
 
+/**
+ * Performs action(s), being authenticated as certain user
+ * 
+ * @author skapral
+ */
 public class ActAsUser extends ActComplex {
+    /**
+     * Ctor.
+     * @param user User
+     * @param action Action
+     */
     public ActAsUser(String user, WebdriverAction action) {
         super(
             new ActAuthenticateAsUser(user),
@@ -37,6 +47,11 @@ public class ActAsUser extends ActComplex {
         );
     }
 
+    /**
+     * Ctor.
+     * @param user User
+     * @param actions Actions
+     */
     public ActAsUser(String user, WebdriverAction... actions) {
         super(
             new ActAuthenticateAsUser(user),

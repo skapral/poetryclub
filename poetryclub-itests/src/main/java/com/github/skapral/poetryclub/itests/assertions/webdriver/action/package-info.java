@@ -24,30 +24,4 @@
  *
  */
 
-package com.github.skapral.poetryclub.itests.assertions.webdriver;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-
-/**
- * Join certain community
- *
- * @author Kapralov Sergey
- */
-public class JoinCommunity implements WebdriverAction {
-    private final String community;
-
-    /**
-     * Ctor.
-     * @param community Community name
-     */
-    public JoinCommunity(String community) {
-        this.community = community;
-    }
-
-    @Override
-    public final void execute(WebDriver driver) {
-        driver.findElement(By.cssSelector("input[communityname='" + community + "']")).click();
-        driver.findElement(By.cssSelector("input[type=submit]")).click();
-    }
-}
+package com.github.skapral.poetryclub.itests.assertions.webdriver.action;

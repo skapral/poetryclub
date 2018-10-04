@@ -31,7 +31,16 @@ import com.github.skapral.poetryclub.itests.assertions.webdriver.action.ActInfer
 import com.github.skapral.poetryclub.itests.assertions.webdriver.poi.PoiSubmitButton;
 import com.github.skapral.poetryclub.itests.assertions.webdriver.poi.agenda.AgendaMessage;
 
+/**
+ * Approves membership of user by clicking "Approve" button on opened agenda.
+ * 
+ * @author skapral
+ */
 public class ActApproveMembership extends ActInferred {
+    /**
+     * Ctor.
+     * @param user User
+     */
     public ActApproveMembership(String user) {
         super(
             () -> new ActComplex(

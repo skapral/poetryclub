@@ -31,7 +31,17 @@ import com.github.skapral.poetryclub.itests.assertions.webdriver.action.ActInfer
 import com.github.skapral.poetryclub.itests.assertions.webdriver.poi.PoiSubmitButton;
 import com.github.skapral.poetryclub.itests.assertions.webdriver.poi.agenda.AgendaMessage;
 
+/**
+ * Declines membership of user by clicking "Ban" button on approval message in 
+ * opened agenda.
+ * 
+ * @author skapral
+ */
 public class ActDeclineMembership extends ActInferred {
+    /**
+     * Ctor.
+     * @param user User
+     */
     public ActDeclineMembership(String user) {
         super(
             () -> new ActComplex(

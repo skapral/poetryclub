@@ -29,9 +29,18 @@ package com.github.skapral.poetryclub.itests.assertions.webdriver.hyp;
 import com.github.skapral.poetryclub.itests.assertions.webdriver.poi.WebdriverPOI;
 import org.openqa.selenium.WebDriver;
 
+/**
+ * Hypothesis about certain POI absence.
+ * 
+ * @author skapral
+ */
 public class HypAbsent implements WebdriverHypothesis {
     private final WebdriverPOI poi;
 
+    /**
+     * Ctor.
+     * @param poi POI
+     */
     public HypAbsent(WebdriverPOI poi) {
         this.poi = poi;
     }

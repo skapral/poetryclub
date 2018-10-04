@@ -28,6 +28,15 @@ package com.github.skapral.poetryclub.itests.assertions.webdriver.hyp;
 
 import org.openqa.selenium.WebDriver;
 
+/**
+ * Hypothesis about certain state of Web driver
+ * 
+ * @author skapral
+ */
 public interface WebdriverHypothesis {
+    /**
+     * @param driver Web driver to validate hypothesis on.
+     * @return true/false
+     */
     boolean truth(WebDriver driver);
 }

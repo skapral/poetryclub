@@ -24,19 +24,33 @@
  *
  */
 
-package com.github.skapral.poetryclub.itests.assertions.webdriver;
+package com.github.skapral.poetryclub.itests.assertions.webdriver.action;
 
-import org.openqa.selenium.By;
+import com.github.skapral.poetryclub.core.time.SystimeFaked;
 import org.openqa.selenium.WebDriver;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import java.time.Duration;
+
 
 /**
- * Asserts that currently opened page is "Choose community".
+ * Simulates waiting for certain amount of time, by shifting fake time to some 
+ * duration
+ * 
+ * @author skapral
  */
-public class AssertJoinCommunityPage implements WebdriverAction {
+public class ActWait implements WebdriverAction {
+    private final Duration duration;
+
+    /**
+     * Ctor.
+     * @param duration Duration
+     */
+    public ActWait(Duration duration) {
+        this.duration = duration;
+    }
+
     @Override
-    public final void execute(WebDriver driver) {
-        assertThat(driver.findElement(By.tagName("h1")).getText()).isEqualTo("Choose community to join");
+    public final void apply(WebDriver source) {
+        SystimeFaked.Memory.TIME = SystimeFaked.Memory.TIME.plus(duration);
     }
 }

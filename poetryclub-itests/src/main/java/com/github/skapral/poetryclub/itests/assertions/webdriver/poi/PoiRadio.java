@@ -31,10 +31,20 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+/**
+ * Radio button in "Join community" form for certain community
+ * 
+ * @author skapral
+ */
 public class PoiRadio implements WebdriverPOI {
     private final String communityName;
     private final WebdriverPOI poi;
 
+    /**
+     * Ctor.
+     * @param communityName Community name
+     * @param poi POI
+     */
     public PoiRadio(String communityName, WebdriverPOI poi) {
         this.communityName = communityName;
         this.poi = poi;

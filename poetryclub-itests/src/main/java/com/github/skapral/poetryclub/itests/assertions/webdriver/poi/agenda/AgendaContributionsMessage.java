@@ -29,7 +29,15 @@ package com.github.skapral.poetryclub.itests.assertions.webdriver.poi.agenda;
 import com.github.skapral.poetryclub.itests.assertions.webdriver.poi.PoiEither;
 import com.github.skapral.poetryclub.itests.assertions.webdriver.poi.PoiInferred;
 
+/**
+ * Agenda message about contributions, made by current user
+ * 
+ * @author skapral
+ */
 public class AgendaContributionsMessage extends PoiInferred {
+    /**
+     * Ctor.
+     */
     public AgendaContributionsMessage() {
         super(
             () -> new PoiEither(

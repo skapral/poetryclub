@@ -87,7 +87,7 @@ public class AssertWebdriverScenario implements Assertion {
                 t
             );
         } finally {
-            driver.close();
+            driver.quit();
         }
     }
 }

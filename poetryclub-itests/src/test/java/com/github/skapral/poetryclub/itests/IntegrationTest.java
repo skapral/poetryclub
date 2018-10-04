@@ -27,13 +27,21 @@
 package com.github.skapral.poetryclub.itests;
 
 import com.github.skapral.poetryclub.itests.assertions.AssertAssumingPoetryclubInstance;
-import com.github.skapral.poetryclub.itests.assertions.webdriver.*;
+import com.github.skapral.poetryclub.itests.assertions.AssertWebdriverScenario;
+import com.github.skapral.poetryclub.itests.assertions.webdriver.action.*;
+import com.github.skapral.poetryclub.itests.assertions.webdriver.action.complex.*;
+import com.github.skapral.poetryclub.itests.assertions.webdriver.hyp.HypAbsent;
+import com.github.skapral.poetryclub.itests.assertions.webdriver.hyp.HypPresent;
+import com.github.skapral.poetryclub.itests.assertions.webdriver.poi.PoiTitle;
+import com.github.skapral.poetryclub.itests.assertions.webdriver.poi.agenda.AgendaUserHasNotContributedAnythingLastMonth;
+import com.github.skapral.poetryclub.itests.assertions.webdriver.poi.agenda.AgendaUserHasNotLeftAnyFeedbackLastMonth;
+import com.github.skapral.poetryclub.itests.assertions.webdriver.poi.agenda.AgendaYouHaventLeftAnyFeedbackLastMonth;
+import com.github.skapral.poetryclub.itests.assertions.webdriver.poi.agenda.AgendaYouHaventMadeAnyContributionsLastMonth;
 import com.pragmaticobjects.oo.atom.anno.NotAtom;
 import com.pragmaticobjects.oo.tests.TestCase;
 import com.pragmaticobjects.oo.tests.junit5.TestsSuite;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.Duration;
 
 /**
  * Integration tests suite for poetryclub.
@@ -51,8 +59,11 @@ public class IntegrationTest extends TestsSuite {
                 "Owner is suggested to create the first community, if not yet created",
                 new AssertAssumingPoetryclubInstance(
                     new AssertWebdriverScenario(
-                        new AuthenticateAsUser("owner"),
-                        new AssertNewCommunityPage()
+                        new ActAuthenticateAsUser("owner"),
+                        new ActCheckPoiText(
+                            new PoiTitle(),
+                            "Provide your community's name!"
+                        )
                     )
                 )
             ),
@@ -60,8 +71,11 @@ public class IntegrationTest extends TestsSuite {
                 "Non-owner is suggested to join the existing communities",
                 new AssertAssumingPoetryclubInstance(
                     new AssertWebdriverScenario(
-                        new AuthenticateAsUser("nonowner"),
-                        new AssertJoinCommunityPage()
+                        new ActAuthenticateAsUser("nonowner"),
+                        new ActCheckPoiText(
+                            new PoiTitle(),
+                            "Choose community to join"
+                        )
                     )
                 )
             ),
@@ -69,9 +83,14 @@ public class IntegrationTest extends TestsSuite {
                 "Owner gets membership page after creating community",
                 new AssertAssumingPoetryclubInstance(
                     new AssertWebdriverScenario(
-                        new AuthenticateAsUser("owner"),
-                        new CreateCommunity("Test community"),
-                        new AssertMembershipPage("owner")
+                        new ActAsUser(
+                            "owner",
+                            new ActCreateCommunity("Test community"),
+                            new ActCheckPoiText(
+                                new PoiTitle(),
+                                "Membership of owner"
+                            )
+                        )
                     )
                 )
             ),
@@ -79,11 +98,18 @@ public class IntegrationTest extends TestsSuite {
                 "Non-owner gets membership page after joining community",
                 new AssertAssumingPoetryclubInstance(
                     new AssertWebdriverScenario(
-                        new AuthenticateAsUser("owner"),
-                        new CreateCommunity("Test community"),
-                        new AuthenticateAsUser("user"),
-                        new JoinCommunity("Test community"),
-                        new AssertMembershipPage("user")
+                        new ActAsUser(
+                            "owner",
+                            new ActCreateCommunity("Test community")
+                        ),
+                        new ActAsUser(
+                            "user",
+                            new ActJoinCommunity("Test community"),
+                            new ActCheckPoiText(
+                                new PoiTitle(),
+                                "Membership of user"
+                            )
+                        )
                     )
                 )
             ),
@@ -91,12 +117,22 @@ public class IntegrationTest extends TestsSuite {
                 "User joins, but its membership was not yet approved",
                 new AssertAssumingPoetryclubInstance(
                     new AssertWebdriverScenario(
-                        new AuthenticateAsUser("owner"),
-                        new CreateCommunity("Test community"),
-                        new AuthenticateAsUser("user"),
-                        new JoinCommunity("Test community"),
-                        new OpenCommunityAgenda("Test community"),
-                        new AssertMembershipNotApprovedPage("user", "Test community")
+                        new ActAsUser(
+                            "owner",
+                            new ActCreateCommunity("Test community")
+                        ),
+                        new ActAsUser(
+                            "user",
+                            new ActJoinCommunity("Test community")
+                        ),
+                        new ActAsUser(
+                            "user",
+                            new ActOpenCommunityAgenda("Test community"),
+                            new ActCheckPoiText(
+                                new PoiTitle(),
+                                "Membership of user in Test community is not yet approved."
+                            )
+                        )
                     )
                 )
             ),
@@ -104,33 +140,55 @@ public class IntegrationTest extends TestsSuite {
                 "Owner approves the user's membership",
                 new AssertAssumingPoetryclubInstance(
                     new AssertWebdriverScenario(
-                        new AuthenticateAsUser("owner"),
-                        new CreateCommunity("Test community"),
-                        new AuthenticateAsUser("user"),
-                        new JoinCommunity("Test community"),
-                        new AuthenticateAsUser("owner"),
-                        new OpenCommunityAgenda("Test community"),
-                        new ApproveMembershipOnAgenda("user"),
-                        new AuthenticateAsUser("user"),
-                        new OpenCommunityAgenda("Test community"),
-                        new AssertAgendaPage("user", "Test community")
-                    )
+                        new ActAsUser(
+                            "owner",
+                            new ActCreateCommunity("Test community")
+                        ),
+                        new ActAsUser(
+                            "user",
+                            new ActJoinCommunity("Test community")
+                        ),
+                        new ActAsUser(
+                            "owner",
+                            new ActOpenCommunityAgenda("Test community"),
+                            new ActApproveMembership("user")
+                        ),
+                        new ActAsUser(
+                            "user",
+                            new ActOpenCommunityAgenda("Test community"),
+                            new ActCheckPoiText(
+                                new PoiTitle(),
+                                "Agenda for user in Test community"
+                            )
+                        )
+                   )
                 )
             ),
             new TestCase(
                 "Owner declines the user's membership",
                 new AssertAssumingPoetryclubInstance(
                     new AssertWebdriverScenario(
-                        new AuthenticateAsUser("owner"),
-                        new CreateCommunity("Test community"),
-                        new AuthenticateAsUser("user"),
-                        new JoinCommunity("Test community"),
-                        new AuthenticateAsUser("owner"),
-                        new OpenCommunityAgenda("Test community"),
-                        new DeclineMembershipOnAgenda("user"),
-                        new AuthenticateAsUser("user"),
-                        new OpenCommunityAgenda("Test community"),
-                        new AssertMemberIsBanned("user", "Test community")
+                        new ActAsUser(
+                            "owner",
+                            new ActCreateCommunity("Test community")
+                        ),
+                        new ActAsUser(
+                            "user",
+                            new ActJoinCommunity("Test community")
+                        ),
+                        new ActAsUser(
+                            "owner",
+                            new ActOpenCommunityAgenda("Test community"),
+                            new ActDeclineMembership("user")
+                        ),
+                        new ActAsUser(
+                            "user",
+                            new ActOpenCommunityAgenda("Test community"),
+                            new ActCheckPoiText(
+                                new PoiTitle(),
+                                "Membership of user in Test community is suspended."
+                            )
+                        )
                     )
                 )
             ),
@@ -138,22 +196,35 @@ public class IntegrationTest extends TestsSuite {
                 "Agenda shows candidates to ban for admin",
                 new AssertAssumingPoetryclubInstance(
                     new AssertWebdriverScenario(
-                        new FakeTime(LocalDateTime.of(2017, 8, 1, 12, 00).atZone(ZoneId.of("UTC"))),
-                        new AuthenticateAsUser("owner"),
-                        new CreateCommunity("Test community"),
-                        new AuthenticateAsUser("user"),
-                        new JoinCommunity("Test community"),
-                        new AuthenticateAsUser("owner"),
-                        new OpenCommunityAgenda("Test community"),
-                        new ApproveMembershipOnAgenda("user"),
-                        new SubmitContributionOnAgenda("http://contribution1"),
-                        new SubmitContributionOnAgenda("http://contribution2"),
-                        new FakeTime(LocalDateTime.of(2017, 9, 1, 12, 00, 01).atZone(ZoneId.of("UTC"))),
-                        new AuthenticateAsUser("owner"),
-                        new OpenCommunityAgenda("Test community"),
-                        new AssertAgendaReportsThatUserHaventMadeAnyContributions(true, "user"),
-                        new AssertAgendaReportsThatUserHaventMadeFeedbackOnCertainContribution(true, "user", "http://contribution1"),
-                        new AssertAgendaReportsThatUserHaventMadeFeedbackOnCertainContribution(true, "user", "http://contribution2")
+                        new ActAsUser(
+                            "owner",
+                            new ActCreateCommunity("Test community")
+                        ),
+                        new ActAsUser(
+                            "user",
+                            new ActJoinCommunity("Test community")
+                        ),
+                        new ActAsUser(
+                            "owner",
+                            new ActOpenCommunityAgenda("Test community"),
+                            new ActApproveMembership("user"),
+                            new ActSubmitContribution("http://contribution1")
+                        ),
+                        new ActShiftSystemTime(Duration.ofDays(32)),
+                        new ActAsUser(
+                            "owner",
+                            new ActOpenCommunityAgenda("Test community"),
+                            new ActCheck(
+                                new HypPresent(
+                                    new AgendaUserHasNotContributedAnythingLastMonth("user")
+                                )
+                            ),
+                            new ActCheck(
+                                new HypPresent(
+                                    new AgendaUserHasNotLeftAnyFeedbackLastMonth("user", "http://contribution1")
+                                )
+                            )
+                        )
                     )
                 )
             ),
@@ -161,22 +232,35 @@ public class IntegrationTest extends TestsSuite {
                 "Agenda shows rules violations for member",
                 new AssertAssumingPoetryclubInstance(
                     new AssertWebdriverScenario(
-                        new FakeTime(LocalDateTime.of(2017, 8, 1, 12, 00).atZone(ZoneId.of("UTC"))),
-                        new AuthenticateAsUser("owner"),
-                        new CreateCommunity("Test community"),
-                        new AuthenticateAsUser("user"),
-                        new JoinCommunity("Test community"),
-                        new AuthenticateAsUser("owner"),
-                        new OpenCommunityAgenda("Test community"),
-                        new ApproveMembershipOnAgenda("user"),
-                        new SubmitContributionOnAgenda("http://contribution1"),
-                        new SubmitContributionOnAgenda("http://contribution2"),
-                        new FakeTime(LocalDateTime.of(2017, 9, 1, 12, 00, 01).atZone(ZoneId.of("UTC"))),
-                        new AuthenticateAsUser("user"),
-                        new OpenCommunityAgenda("Test community"),
-                        new AssertAgendaReportsViolationAboutTheAbsenseOfContributions(true),
-                        new AssertAgendaReportsViolationAboutTheAbsenseOfFeedbackOnContribution(true,"http://contribution1"),
-                        new AssertAgendaReportsViolationAboutTheAbsenseOfFeedbackOnContribution(true, "http://contribution2")
+                        new ActAsUser(
+                            "owner",
+                            new ActCreateCommunity("Test community")
+                        ),
+                        new ActAsUser(
+                            "user",
+                            new ActJoinCommunity("Test community")
+                        ),
+                        new ActAsUser(
+                            "owner",
+                            new ActOpenCommunityAgenda("Test community"),
+                            new ActApproveMembership("user"),
+                            new ActSubmitContribution("http://contribution1")
+                        ),
+                        new ActShiftSystemTime(Duration.ofDays(32)),
+                        new ActAsUser(
+                            "user",
+                            new ActOpenCommunityAgenda("Test community"),
+                            new ActCheck(
+                                new HypPresent(
+                                    new AgendaYouHaventMadeAnyContributionsLastMonth()
+                                )
+                            ),
+                            new ActCheck(
+                                new HypPresent(
+                                    new AgendaYouHaventLeftAnyFeedbackLastMonth("http://contribution1")
+                                )
+                            )
+                        )
                     )
                 )
             ),
@@ -184,21 +268,50 @@ public class IntegrationTest extends TestsSuite {
                 "Agenda doesn't show violations for the users who recently joined in",
                 new AssertAssumingPoetryclubInstance(
                     new AssertWebdriverScenario(
-                        new FakeTime(LocalDateTime.of(2017, 8, 1, 12, 00).atZone(ZoneId.of("UTC"))),
-                        new AuthenticateAsUser("owner"),
-                        new CreateCommunity("Test community"),
-                        new OpenCommunityAgenda("Test community"),
-                        new SubmitContributionOnAgenda("http://contribution"),
-                        new FakeTime(LocalDateTime.of(2017, 9, 1, 12, 00, 01).atZone(ZoneId.of("UTC"))),
-                        new AuthenticateAsUser("innocent_user"),
-                        new JoinCommunity("Test community"),
-                        new OpenCommunityAgenda("Test community"),
-                        new AssertAgendaReportsViolationAboutTheAbsenseOfContributions(false),
-                        new AssertAgendaReportsViolationAboutTheAbsenseOfFeedbackOnContribution(false,"http://contribution"),
-                        new AuthenticateAsUser("owner"),
-                        new OpenCommunityAgenda("Test community"),
-                        new AssertAgendaReportsThatUserHaventMadeAnyContributions(false, "innocent_user"),
-                        new AssertAgendaReportsThatUserHaventMadeFeedbackOnCertainContribution(false, "innocent_user", "http://contribution")
+                        new ActAsUser(
+                            "owner",
+                            new ActCreateCommunity("Test community"),
+                            new ActOpenCommunityAgenda("Test community"),
+                            new ActSubmitContribution("http://contribution1")
+                        ),
+                        new ActShiftSystemTime(Duration.ofDays(32)),
+                        new ActAsUser(
+                            "innocent_user",
+                            new ActJoinCommunity("Test community")
+                        ),
+                        new ActAsUser(
+                            "owner",
+                            new ActOpenCommunityAgenda("Test community"),
+                            new ActApproveMembership("innocent_user")
+                        ),
+                        new ActAsUser(
+                            "innocent_user",
+                            new ActOpenCommunityAgenda("Test community"),
+                            new ActCheck(
+                                new HypAbsent(
+                                    new AgendaYouHaventMadeAnyContributionsLastMonth()
+                                )
+                            ),
+                            new ActCheck(
+                                new HypAbsent(
+                                    new AgendaYouHaventLeftAnyFeedbackLastMonth("http://contribution1")
+                                )
+                            )
+                        ),
+                        new ActAsUser(
+                            "owner",
+                            new ActOpenCommunityAgenda("Test community"),
+                            new ActCheck(
+                                new HypAbsent(
+                                    new AgendaUserHasNotContributedAnythingLastMonth("innocent_user")
+                                )
+                            ),
+                            new ActCheck(
+                                new HypAbsent(
+                                    new AgendaUserHasNotLeftAnyFeedbackLastMonth("innocent_user", "http://contribution1")
+                                )
+                            )
+                        )
                     )
                 )
             ),
@@ -206,11 +319,16 @@ public class IntegrationTest extends TestsSuite {
                 "Agenda page has a link on community summary",
                 new AssertAssumingPoetryclubInstance(
                     new AssertWebdriverScenario(
-                        new AuthenticateAsUser("owner"),
-                        new CreateCommunity("Test community"),
-                        new OpenCommunityAgenda("Test community"),
-                        new OpenCommunitySummary(),
-                        new AssertSummaryPage("Test community")
+                        new ActAsUser(
+                            "owner",
+                            new ActCreateCommunity("Test community"),
+                            new ActOpenCommunityAgenda("Test community"),
+                            new ActOpenCommunitySummary(),
+                            new ActCheckPoiText(
+                                new PoiTitle(),
+                                "Summary for Test community"
+                            )
+                        )
                     )
                 )
             ),
@@ -218,19 +336,27 @@ public class IntegrationTest extends TestsSuite {
                 "Summary page of community displays all members",
                 new AssertAssumingPoetryclubInstance(
                     new AssertWebdriverScenario(
-                        new AuthenticateAsUser("owner"),
-                        new CreateCommunity("Test community"),
-                        new AuthenticateAsUser("user1"),
-                        new JoinCommunity("Test community"),
-                        new AuthenticateAsUser("user2"),
-                        new JoinCommunity("Test community"),
-                        new AuthenticateAsUser("owner"),
-                        new OpenCommunityAgenda("Test community"),
-                        new ApproveMembershipOnAgenda("user1"),
-                        new OpenCommunitySummary(),
-                        new AssertSummaryPageDisplaysMember("owner", "admin"),
-                        new AssertSummaryPageDisplaysMember("user1", "member"),
-                        new AssertSummaryPageDisplaysMember("user2", "candidate")
+                        new ActAsUser(
+                            "owner",
+                            new ActCreateCommunity("Test community")
+                        ),
+                        new ActAsUser(
+                            "user1",
+                            new ActJoinCommunity("Test community")
+                        ),
+                        new ActAsUser(
+                            "user2",
+                            new ActJoinCommunity("Test community")
+                        ),
+                        new ActAsUser(
+                            "owner",
+                            new ActOpenCommunityAgenda("Test community"),
+                            new ActApproveMembership("user1"),
+                            new ActOpenCommunitySummary(),
+                            new ActCheckSummaryPageDisplaysMember("owner", "admin"),
+                            new ActCheckSummaryPageDisplaysMember("user1", "member"),
+                            new ActCheckSummaryPageDisplaysMember("user2", "candidate")
+                        )
                     )
                 )
             ),
@@ -238,20 +364,28 @@ public class IntegrationTest extends TestsSuite {
                 "Summary page of community displays all contributions",
                 new AssertAssumingPoetryclubInstance(
                     new AssertWebdriverScenario(
-                        new AuthenticateAsUser("owner"),
-                        new CreateCommunity("Test community"),
-                        new AuthenticateAsUser("user1"),
-                        new JoinCommunity("Test community"),
-                        new AuthenticateAsUser("owner"),
-                        new OpenCommunityAgenda("Test community"),
-                        new ApproveMembershipOnAgenda("user1"),
-                        new SubmitContributionOnAgenda("http://test/contrib1"),
-                        new AuthenticateAsUser("user1"),
-                        new OpenCommunityAgenda("Test community"),
-                        new SubmitContributionOnAgenda("http://test/contrib2"),
-                        new OpenCommunitySummary(),
-                        new AssertSummaryPageDisplaysContribution("http://test/contrib1", "owner"),
-                        new AssertSummaryPageDisplaysContribution("http://test/contrib2", "user1")
+                        new ActAsUser(
+                            "owner",
+                            new ActCreateCommunity("Test community")
+                        ),
+                        new ActAsUser(
+                            "user1",
+                            new ActJoinCommunity("Test community")
+                        ),
+                        new ActAsUser(
+                            "owner",
+                            new ActOpenCommunityAgenda("Test community"),
+                            new ActApproveMembership("user1"),
+                            new ActSubmitContribution("http://test/contrib1")
+                        ),
+                        new ActAsUser(
+                            "user1",
+                            new ActOpenCommunityAgenda("Test community"),
+                            new ActSubmitContribution("http://test/contrib2"),
+                            new ActOpenCommunitySummary(),
+                            new ActCheckSummaryPageDisplaysContribution("http://test/contrib1", "owner"),
+                            new ActCheckSummaryPageDisplaysContribution("http://test/contrib2", "user1")
+                        )
                     )
                 )
             )

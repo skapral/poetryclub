@@ -24,22 +24,20 @@
  *
  */
 
-package com.github.skapral.poetryclub.itests.assertions.webdriver.action;
+package com.github.skapral.poetryclub.itests.assertions.webdriver.hyp;
 
-import com.github.skapral.poetryclub.itests.assertions.webdriver.hyp.WebdriverHypothesis;
-import org.assertj.core.api.Assertions;
+import com.github.skapral.poetryclub.itests.assertions.webdriver.poi.WebdriverPOI;
 import org.openqa.selenium.WebDriver;
 
+public class HypAbsent implements WebdriverHypothesis {
+    private final WebdriverPOI poi;
 
-public class ActCheck implements WebdriverAction {
-    private final WebdriverHypothesis hypothesis;
-
-    public ActCheck(WebdriverHypothesis hypothesis) {
-        this.hypothesis = hypothesis;
+    public HypAbsent(WebdriverPOI poi) {
+        this.poi = poi;
     }
 
     @Override
-    public final void apply(WebDriver source) {
-        Assertions.assertThat(hypothesis.truth(source)).isTrue();
+    public final boolean truth(WebDriver driver) {
+        return poi.webElement(driver).isEmpty();
     }
 }

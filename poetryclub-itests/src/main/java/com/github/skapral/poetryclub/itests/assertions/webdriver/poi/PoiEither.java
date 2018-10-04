@@ -26,16 +26,26 @@
 
 package com.github.skapral.poetryclub.itests.assertions.webdriver.poi;
 
+import io.vavr.collection.List;
 import io.vavr.control.Option;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class PoiSubmitContributionForm implements WebdriverPOI {
+public class PoiEither implements WebdriverPOI {
+    private final List<WebdriverPOI> poi;
+
+    public PoiEither(List<WebdriverPOI> poi) {
+        this.poi = poi;
+    }
+
+    public PoiEither(WebdriverPOI... poi) {
+        this(List.of(poi));
+    }
+
     @Override
     public final Option<WebElement> webElement(WebDriver source) {
-        return Option.of(
-            source.findElement(By.xpath("//form[@action='newcontribution']"))
-        );
+        return poi
+            .flatMap(p -> p.webElement(source).toList())
+            .find(p -> true);
     }
 }

@@ -32,7 +32,9 @@ import com.github.skapral.poetryclub.itests.assertions.webdriver.action.*;
 import com.github.skapral.poetryclub.itests.assertions.webdriver.action.complex.*;
 import com.github.skapral.poetryclub.itests.assertions.webdriver.hyp.HypAbsent;
 import com.github.skapral.poetryclub.itests.assertions.webdriver.hyp.HypPresent;
+import com.github.skapral.poetryclub.itests.assertions.webdriver.poi.PoiSubmitButton;
 import com.github.skapral.poetryclub.itests.assertions.webdriver.poi.PoiTitle;
+import com.github.skapral.poetryclub.itests.assertions.webdriver.poi.agenda.AgendaMessage;
 import com.github.skapral.poetryclub.itests.assertions.webdriver.poi.agenda.AgendaUserHasNotContributedAnythingLastMonth;
 import com.github.skapral.poetryclub.itests.assertions.webdriver.poi.agenda.AgendaUserHasNotLeftAnyFeedbackLastMonth;
 import com.github.skapral.poetryclub.itests.assertions.webdriver.poi.agenda.AgendaYouHaventLeftAnyFeedbackLastMonth;
@@ -48,7 +50,6 @@ import java.time.Duration;
  *
  * @author Kapralov Sergey
  */
-@NotAtom
 public class IntegrationTest extends TestsSuite {
     /**
      * Ctor.
@@ -310,6 +311,89 @@ public class IntegrationTest extends TestsSuite {
                                 new HypAbsent(
                                     new AgendaUserHasNotLeftAnyFeedbackLastMonth("innocent_user", "http://contribution1")
                                 )
+                            )
+                        )
+                    )
+                )
+            ),
+            new TestCase(
+                "Admin forgave the disloyal member",
+                new AssertAssumingPoetryclubInstance(
+                    new AssertWebdriverScenario(
+                        new ActAsUser(
+                            "owner",
+                            new ActCreateCommunity("Test community")
+                        ),
+                        new ActAsUser(
+                            "user",
+                            new ActJoinCommunity("Test community")
+                        ),
+                        new ActAsUser(
+                            "owner",
+                            new ActOpenCommunityAgenda("Test community"),
+                            new ActApproveMembership("user")
+                        ),
+                        new ActWait(Duration.ofDays(32)),
+                        new ActAsUser(
+                            "owner",
+                            new ActOpenCommunityAgenda("Test community"),
+                            new ActClick(
+                                new PoiSubmitButton(
+                                    "Forgive",
+                                    new AgendaUserHasNotContributedAnythingLastMonth(
+                                        "user"
+                                    )
+                                )
+                            )
+                        ),
+                        new ActAsUser(
+                            "user",
+                            new ActOpenCommunityAgenda("Test community"),
+                            new ActCheck(
+                                new HypAbsent(
+                                    new AgendaYouHaventMadeAnyContributionsLastMonth()
+                                )
+                            )
+                        )
+                    )
+                )
+            ),
+            new TestCase(
+                "Admin banned the disloyal member",
+                new AssertAssumingPoetryclubInstance(
+                    new AssertWebdriverScenario(
+                        new ActAsUser(
+                            "owner",
+                            new ActCreateCommunity("Test community")
+                        ),
+                        new ActAsUser(
+                            "user",
+                            new ActJoinCommunity("Test community")
+                        ),
+                        new ActAsUser(
+                            "owner",
+                            new ActOpenCommunityAgenda("Test community"),
+                            new ActApproveMembership("user")
+                        ),
+                        new ActWait(Duration.ofDays(32)),
+                        new ActAsUser(
+                            "owner",
+                            new ActOpenCommunityAgenda("Test community"),
+                            new ActClick(
+                                new PoiSubmitButton(
+                                    "Ban",
+                                    new AgendaUserHasNotContributedAnythingLastMonth(
+                                        "user"
+                                    )
+                                )
+                            )
+                        ),
+                        new ActAsUser(
+                            "user",
+                            new ActOpenCommunityAgenda("Test community"),
+                            new ActCheckPoiText(
+                                new PoiTitle(),
+                                "Membership of user in Test community is suspended."
                             )
                         )
                     )

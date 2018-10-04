@@ -27,6 +27,9 @@
 package com.github.skapral.poetryclub.core.time;
 
 import com.pragmaticobjects.oo.atom.anno.NotAtom;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.ZoneId;
 
 import java.time.ZonedDateTime;
 
@@ -46,6 +49,7 @@ public class SystimeFaked implements SystemTime {
      */
     @NotAtom
     public static class Memory {
-        public static volatile ZonedDateTime TIME = ZonedDateTime.now();
+        public static volatile ZonedDateTime TIME = ZonedDateTime
+                .of(LocalDateTime.of(2017, Month.MARCH, 1, 12, 0), ZoneId.of("UTC"));
     }
 }

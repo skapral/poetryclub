@@ -36,7 +36,19 @@ import java.util.UUID;
 import static com.github.skapral.poetryclub.db.jooq.Tables.*;
 import static org.jooq.impl.DSL.*;
 
+/**
+ * Forgive member by resetting the timestamp of its membership
+ * 
+ * @author skapral
+ */
 public class OpForgiveMember extends OpJooq {
+    /**
+     * Ctor.
+     * 
+     * @param accountLogin Account login
+     * @param community Community
+     * @param time System time
+     */
     public OpForgiveMember(Scalar<String> accountLogin, Scalar<UUID> community, SystemTime time) {
         super(
             new DbaPoetryClub(),

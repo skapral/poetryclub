@@ -27,6 +27,7 @@
 package com.github.skapral.poetryclub.service.jersey;
 
 import com.github.skapral.poetryclub.core.scalar.ScalarStatic;
+import com.github.skapral.poetryclub.core.scalar.ScalarValidName;
 import com.github.skapral.poetryclub.core.scalar.ScalarURL;
 import com.github.skapral.poetryclub.core.scalar.ScalarUUID;
 import com.github.skapral.poetryclub.db.operation.*;
@@ -107,7 +108,7 @@ public class PoetryEndpoint {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response newCommunity(@FormParam("name") String name, @Context HttpServletRequest req) {
         new OpNewCommunity(
-            name,
+            new ScalarValidName(name),
             new ScalarCurrentUser(req)
         ).execute();
         return Response.seeOther(URI.create("index.html")).build();

@@ -27,7 +27,7 @@
 package com.github.skapral.poetryclub.service.jersey;
 
 import com.github.skapral.poetryclub.core.operation.OpSequence;
-import com.github.skapral.poetryclub.core.scalar.ScalarStatic;
+import com.github.skapral.poetryclub.core.scalar.ScalarValidName;
 import com.github.skapral.poetryclub.db.operation.OpNewUser;
 import com.github.skapral.poetryclub.service.operation.OpIdentifySession;
 import com.pragmaticobjects.oo.atom.anno.NotAtom;
@@ -65,10 +65,10 @@ public class FakeAuthenticationEndpoint {
         new OpSequence(
             new OpIdentifySession(
                 req,
-                new ScalarStatic<>(user)
+                new ScalarValidName(user)
             ),
             new OpNewUser(
-                new ScalarStatic<>(user)
+                new ScalarValidName(user)
             )
         ).execute();
         return Response.seeOther(URI.create("/index.html")).build();

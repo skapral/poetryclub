@@ -23,7 +23,7 @@ public class OpNewCommunity extends OpJooq {
      * @param ownerLogin The owner's login
      * @param time System time
      */
-    public OpNewCommunity(String communityName, Scalar<String> ownerLogin, SystemTime time) {
+    public OpNewCommunity(Scalar<String> communityName, Scalar<String> ownerLogin, SystemTime time) {
         super(
             new DbaPoetryClub(),
             () -> insertInto(
@@ -32,7 +32,7 @@ public class OpNewCommunity extends OpJooq {
                 COMMUNITY.NAME
             ).values(
                 UUID.randomUUID(),
-                communityName
+                communityName.value()
             ),
             () -> insertInto(
                 MEMBER,
@@ -51,10 +51,10 @@ public class OpNewCommunity extends OpJooq {
 
     /**
      * Ctor.
-     * @param communityName The name of comunity
+     * @param communityName The name of community
      * @param ownerLogin The owner's login
      */
-    public OpNewCommunity(String communityName, Scalar<String> ownerLogin) {
+    public OpNewCommunity(Scalar<String> communityName, Scalar<String> ownerLogin) {
         this(
             communityName,
             ownerLogin,

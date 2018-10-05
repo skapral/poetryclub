@@ -30,6 +30,8 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * Scalar with value, memoized at session's attributes
+ * 
+ * @param <T> Scalar type.
  * @author skapral
  */
 public class ScalarSessionValue<T> implements Scalar<T> {

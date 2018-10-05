@@ -31,23 +31,25 @@ import com.github.scribejava.core.model.OAuthRequest;
 import com.github.scribejava.core.model.Verb;
 import com.github.scribejava.core.oauth.OAuth20Service;
 import com.github.skapral.poetryclub.core.scalar.Scalar;
-import com.github.skapral.poetryclub.core.scalar.ScalarMemoizedValue;
 import org.json.JSONObject;
 
 import java.util.Objects;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * User, obtained from GitHub authentication code
  * @author Kapralov Sergey
  */
-public class ScalarGithubUser extends ScalarMemoizedValue<String> {
+public class ScalarGithubUser extends ScalarSessionValue<String> {
     /**
      * Ctor.
+     * @param req request
      * @param oauth oauth service
      * @param authorizationCode authorization code from GitHub callback
      */
-    public ScalarGithubUser(Scalar<OAuth20Service> oauth, String authorizationCode) {
+    public ScalarGithubUser(HttpServletRequest req, Scalar<OAuth20Service> oauth, String authorizationCode) {
         super(
+            req,
             authorizationCode,
             () -> {
                 try {

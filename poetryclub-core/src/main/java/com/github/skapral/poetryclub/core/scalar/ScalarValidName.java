@@ -29,7 +29,6 @@ package com.github.skapral.poetryclub.core.scalar;
 /**
  * Scalar with valid name string
  *
- * @param <T> Scalar type.
  */
 public class ScalarValidName implements Scalar<String> {
     private final String value;

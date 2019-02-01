@@ -26,7 +26,7 @@
 
 package com.github.skapral.poetryclub.core.time;
 
-import com.github.skapral.poetryclub.core.config.ConfigProperty;
+import com.github.skapral.config.ConfigProperty;
 import com.github.skapral.poetryclub.core.config.Cp_FAKE_SYSTIME;
 
 /**

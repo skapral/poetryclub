@@ -26,6 +26,11 @@
 
 package com.github.skapral.poetryclub.core.config;
 
+import com.github.skapral.config.CpEnvironment;
+import com.github.skapral.config.CpOneOf;
+import com.github.skapral.config.CpStatic;
+import com.github.skapral.config.CpSystemProperty;
+
 /**
  * OWNER config property.
  *

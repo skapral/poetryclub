@@ -1,8 +1,9 @@
 package com.github.skapral.poetryclub.db.config;
 
-import com.github.skapral.poetryclub.core.config.CpEnvironment;
-import com.github.skapral.poetryclub.core.config.CpOneOf;
-import com.github.skapral.poetryclub.core.config.CpSystemProperty;
+import com.github.skapral.config.CpEnvironment;
+import com.github.skapral.config.CpOneOf;
+import com.github.skapral.config.CpSystemProperty;
+
 
 /**
  * Config property for JDBC_DATABASE_URL.

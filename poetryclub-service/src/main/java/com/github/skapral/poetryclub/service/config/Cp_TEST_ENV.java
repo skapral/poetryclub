@@ -26,7 +26,7 @@
 
 package com.github.skapral.poetryclub.service.config;
 
-import com.github.skapral.poetryclub.core.config.CpEnvironment;
+import com.github.skapral.config.CpEnvironment;
 
 /**
  * TEST_ENV config property

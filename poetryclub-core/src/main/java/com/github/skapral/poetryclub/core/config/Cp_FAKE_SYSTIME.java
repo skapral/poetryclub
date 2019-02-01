@@ -1,5 +1,7 @@
 package com.github.skapral.poetryclub.core.config;
 
+import com.github.skapral.config.CpSystemProperty;
+
 /**
  * poetryclub.FAKE_SYSTIME config property
  *

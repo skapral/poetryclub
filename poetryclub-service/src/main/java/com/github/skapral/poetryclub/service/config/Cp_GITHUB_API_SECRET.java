@@ -1,6 +1,7 @@
 package com.github.skapral.poetryclub.service.config;
 
-import com.github.skapral.poetryclub.core.config.CpEnvironment;
+
+import com.github.skapral.config.CpEnvironment;
 
 /**
  * GITHUB_API_SECRET property

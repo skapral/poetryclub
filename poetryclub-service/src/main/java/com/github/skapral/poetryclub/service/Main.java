@@ -1,9 +1,7 @@
 package com.github.skapral.poetryclub.service;
 
-import com.github.skapral.poetryclub.service.config.Cp_PORT;
 import com.github.skapral.poetryclub.service.config.Cp_TEST_ENV;
-import com.github.skapral.poetryclub.service.scalar.ScalarPoetryClubJerseyResourceConfig;
-import com.github.skapral.poetryclub.service.server.SrvGrizzlyWithJerseyAndJtwig;
+import com.github.skapral.poetryclub.service.server.SrvPoetryclub;
 import com.pragmaticobjects.oo.atom.anno.NotAtom;
 
 /**
@@ -19,11 +17,8 @@ public class Main {
      * @throws Exception if something goes wrong
      */
     public static void main(String... args) throws Exception {
-        new SrvGrizzlyWithJerseyAndJtwig(
-            new Cp_PORT(),
-            new ScalarPoetryClubJerseyResourceConfig(
-                new Cp_TEST_ENV()
-            )
+        new SrvPoetryclub(
+            new Cp_TEST_ENV()
         ).start();
         while(true) {
             System.in.read();

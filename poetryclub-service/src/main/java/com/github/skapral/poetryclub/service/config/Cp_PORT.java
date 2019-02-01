@@ -1,8 +1,8 @@
 package com.github.skapral.poetryclub.service.config;
 
-import com.github.skapral.poetryclub.core.config.CpEnvironment;
-import com.github.skapral.poetryclub.core.config.CpOneOf;
-import com.github.skapral.poetryclub.core.config.CpStatic;
+import com.github.skapral.config.CpEnvironment;
+import com.github.skapral.config.CpOneOf;
+import com.github.skapral.config.CpStatic;
 
 /**
  * PORT property

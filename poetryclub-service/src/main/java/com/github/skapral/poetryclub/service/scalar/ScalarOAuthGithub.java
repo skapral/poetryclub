@@ -29,7 +29,7 @@ package com.github.skapral.poetryclub.service.scalar;
 import com.github.scribejava.apis.GitHubApi;
 import com.github.scribejava.core.builder.ServiceBuilder;
 import com.github.scribejava.core.oauth.OAuth20Service;
-import com.github.skapral.poetryclub.core.config.ConfigProperty;
+import com.github.skapral.config.ConfigProperty;
 import com.github.skapral.poetryclub.core.scalar.ScalarMemoizedValue;
 import com.github.skapral.poetryclub.service.config.Cp_GITHUB_API_KEY;
 import com.github.skapral.poetryclub.service.config.Cp_GITHUB_API_SECRET;

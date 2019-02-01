@@ -26,7 +26,7 @@
 
 package com.github.skapral.poetryclub.core.scalar;
 
-import com.github.skapral.poetryclub.core.config.ConfigProperty;
+import com.github.skapral.config.ConfigProperty;
 
 /**
  * Scalar, which is true if user name stands for service owner.

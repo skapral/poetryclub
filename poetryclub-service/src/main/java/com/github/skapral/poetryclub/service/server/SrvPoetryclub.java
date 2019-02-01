@@ -21,20 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- */
-
-package com.github.skapral.poetryclub.core.config;
-
-import io.vavr.control.Option;
-
-/**
- * Configuration property
  *
- * @author Kapralov Sergey
  */
-public interface ConfigProperty {
-    /**
-     * @return optional value of the configuration property.
-     */
-    Option<String> optionalValue();
+
+package com.github.skapral.poetryclub.service.server;
+
+import com.github.skapral.config.ConfigProperty;
+import com.github.skapral.jersey.se.Server;
+import com.github.skapral.jersey.se.SrvGrizzlyWithJersey;
+import com.github.skapral.poetryclub.service.config.Cp_PORT;
+import com.github.skapral.poetryclub.service.jersey.PoetryClubFakedAuthenticationAPI;
+import com.github.skapral.poetryclub.service.jersey.PoetryClubAPI;
+
+public class SrvPoetryclub implements Server {
+    private final ConfigProperty configProperty;
+
+    public SrvPoetryclub(ConfigProperty configProperty) {
+        this.configProperty = configProperty;
+    }
+
+    @Override
+    public final ServerStopHandle start() {
+        if(configProperty.optionalValue().isDefined()) {
+            return new SrvGrizzlyWithJersey(
+                new Cp_PORT(),
+                new PoetryClubFakedAuthenticationAPI()
+            ).start();
+        } else {
+            return new SrvGrizzlyWithJersey(
+                new Cp_PORT(),
+                new PoetryClubAPI()
+            ).start();
+        }
+    }
 }

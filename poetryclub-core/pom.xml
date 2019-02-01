@@ -25,5 +25,9 @@
             <groupId>io.vavr</groupId>
             <artifactId>vavr</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.github.skapral.config</groupId>
+            <artifactId>config-properties</artifactId>
+        </dependency>
     </dependencies>
 </project>

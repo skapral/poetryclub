@@ -1,6 +1,7 @@
 package com.github.skapral.poetryclub.db.scalar.datasource;
 
-import com.github.skapral.poetryclub.core.config.ConfigProperty;
+
+import com.github.skapral.config.ConfigProperty;
 import com.github.skapral.poetryclub.core.scalar.ScalarMemoizedValue;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;

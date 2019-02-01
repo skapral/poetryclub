@@ -26,11 +26,14 @@
 
 package com.github.skapral.poetryclub.itests.assertions;
 
+import com.github.skapral.config.CpMissingValue;
+import com.github.skapral.config.CpStatic;
+import com.github.skapral.jersey.se.Server;
 import com.github.skapral.poetryclub.core.scalar.ScalarStatic;
+import com.github.skapral.poetryclub.core.util.Memory;
 import com.github.skapral.poetryclub.service.config.Cp_PORT;
 import com.github.skapral.poetryclub.service.jersey.PoetryClubFakedAuthenticationAPI;
-import com.github.skapral.poetryclub.service.server.Server;
-import com.github.skapral.poetryclub.service.server.SrvGrizzlyWithJerseyAndJtwig;
+import com.github.skapral.poetryclub.service.server.SrvPoetryclub;
 import com.pragmaticobjects.oo.tests.Assertion;
 import org.testcontainers.containers.GenericContainer;
 
@@ -46,11 +49,8 @@ public class AssertAssumingPoetryclubInstance implements Assertion {
         .withExposedPorts(5432)
         .withEnv("POSTGRES_PASSWORD", "postgres");
 
-    private static final Supplier<Server> poetryServer = () -> new SrvGrizzlyWithJerseyAndJtwig(
-        new Cp_PORT(),
-        new ScalarStatic<>(
-            new PoetryClubFakedAuthenticationAPI()
-        )
+    private static final Supplier<Server> poetryServer = () -> new SrvPoetryclub(
+        new CpStatic("testmode")
     );
 
     private final Assertion assertion;
@@ -77,6 +77,7 @@ public class AssertAssumingPoetryclubInstance implements Assertion {
             try {
                 assertion.check();
             } finally {
+                Memory.reset();
                 stopHandle.stop();
             }
         } finally {

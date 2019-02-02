@@ -30,9 +30,20 @@ import org.flywaydb.core.Flyway;
 
 import javax.sql.DataSource;
 
+/**
+ * Default implementation of {@link FlywayMigrationScenario}.
+ * Takes flyway scripts from classpath:db/migration, but client may specify
+ * additional location
+ * 
+ * @author skapral
+ */
 public class FmsDefault implements FlywayMigrationScenario {
     private final String testPath;
 
+    /**
+     * Ctor.
+     * @param testPath Additional path of flyway scenarios
+     */
     public FmsDefault(String testPath) {
         this.testPath = testPath;
     }

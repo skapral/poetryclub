@@ -34,12 +34,10 @@ import com.github.skapral.poetryclub.itests.assertions.webdriver.hyp.HypAbsent;
 import com.github.skapral.poetryclub.itests.assertions.webdriver.hyp.HypPresent;
 import com.github.skapral.poetryclub.itests.assertions.webdriver.poi.PoiSubmitButton;
 import com.github.skapral.poetryclub.itests.assertions.webdriver.poi.PoiTitle;
-import com.github.skapral.poetryclub.itests.assertions.webdriver.poi.agenda.AgendaMessage;
 import com.github.skapral.poetryclub.itests.assertions.webdriver.poi.agenda.AgendaUserHasNotContributedAnythingLastMonth;
 import com.github.skapral.poetryclub.itests.assertions.webdriver.poi.agenda.AgendaUserHasNotLeftAnyFeedbackLastMonth;
 import com.github.skapral.poetryclub.itests.assertions.webdriver.poi.agenda.AgendaYouHaventLeftAnyFeedbackLastMonth;
 import com.github.skapral.poetryclub.itests.assertions.webdriver.poi.agenda.AgendaYouHaventMadeAnyContributionsLastMonth;
-import com.pragmaticobjects.oo.atom.anno.NotAtom;
 import com.pragmaticobjects.oo.tests.TestCase;
 import com.pragmaticobjects.oo.tests.junit5.TestsSuite;
 

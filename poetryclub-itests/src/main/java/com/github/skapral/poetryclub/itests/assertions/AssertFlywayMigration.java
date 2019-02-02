@@ -33,6 +33,11 @@ import com.zaxxer.hikari.HikariDataSource;
 import org.postgresql.Driver;
 import org.testcontainers.containers.GenericContainer;
 
+/**
+ * Assert that certain {@link FlywayMigrationScenario} is applied without failures
+ * 
+ * @author skapral
+ */
 public class AssertFlywayMigration implements Assertion {
     private static final GenericContainer PG = new GenericContainer("postgres:10.4")
         .withExposedPorts(5432)
@@ -40,6 +45,10 @@ public class AssertFlywayMigration implements Assertion {
 
     private final FlywayMigrationScenario scenario;
 
+    /**
+     * Ctor.
+     * @param scenario Flyway migration scenario
+     */
     public AssertFlywayMigration(FlywayMigrationScenario scenario) {
         this.scenario = scenario;
     }

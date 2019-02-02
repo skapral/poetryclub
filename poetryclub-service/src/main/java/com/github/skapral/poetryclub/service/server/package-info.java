@@ -24,32 +24,4 @@
  *
  */
 
-package com.github.skapral.poetryclub.itests;
-
-import com.github.skapral.poetryclub.itests.assertions.AssertFlywayMigration;
-import com.github.skapral.poetryclub.itests.assertions.flyway.FmsDefault;
-import com.pragmaticobjects.oo.tests.TestCase;
-import com.pragmaticobjects.oo.tests.junit5.TestsSuite;
-
-/**
- * Flyway migrations test
- * 
- * @author skapral
- */
-public class MigrationTest extends TestsSuite {
-    /**
-     * Ctor.
-     */
-    public MigrationTest() {
-        super(
-            new TestCase(
-                "When absent, member timestamps must be generated 1 month before the current date",
-                new AssertFlywayMigration(
-                    new FmsDefault(
-                        "db/migrationtest/membertimestamps"
-                    )
-                )
-            )
-        );
-    }
-}
+package com.github.skapral.poetryclub.service.server;

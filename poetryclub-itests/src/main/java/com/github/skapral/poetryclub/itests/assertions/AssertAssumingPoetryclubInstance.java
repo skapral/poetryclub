@@ -26,13 +26,9 @@
 
 package com.github.skapral.poetryclub.itests.assertions;
 
-import com.github.skapral.config.CpMissingValue;
 import com.github.skapral.config.CpStatic;
 import com.github.skapral.jersey.se.Server;
-import com.github.skapral.poetryclub.core.scalar.ScalarStatic;
 import com.github.skapral.poetryclub.core.util.Memory;
-import com.github.skapral.poetryclub.service.config.Cp_PORT;
-import com.github.skapral.poetryclub.service.jersey.PoetryClubFakedAuthenticationAPI;
 import com.github.skapral.poetryclub.service.server.SrvPoetryclub;
 import com.pragmaticobjects.oo.tests.Assertion;
 import org.testcontainers.containers.GenericContainer;

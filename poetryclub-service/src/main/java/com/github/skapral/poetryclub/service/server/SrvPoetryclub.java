@@ -33,9 +33,16 @@ import com.github.skapral.poetryclub.service.config.Cp_PORT;
 import com.github.skapral.poetryclub.service.jersey.PoetryClubFakedAuthenticationAPI;
 import com.github.skapral.poetryclub.service.jersey.PoetryClubAPI;
 
+/**
+ * Poetryclub server
+ */
 public class SrvPoetryclub implements Server {
     private final ConfigProperty configProperty;
 
+    /**
+     * Ctor.
+     * @param configProperty Config property for enabling test environment
+     */
     public SrvPoetryclub(ConfigProperty configProperty) {
         this.configProperty = configProperty;
     }
